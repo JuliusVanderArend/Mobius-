@@ -9,6 +9,7 @@ var angle = 0;
 var resolution = 5;
 var pixSize = 5;
 var gloabalOffset = [0,0,0];
+var objects =[];
 const moveSpeed = 0.4;
 
 
@@ -20,8 +21,30 @@ Number.prototype.clamp = function(min, max) {
 
 
 var setup = function(){
-  rect = new GObject([])
-  rect.tris.push(new Tri([[-3],[-1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
+  objects.push(rect = makeRect([0,0,0]));
+  objects.push(rect = makeRect([0,3,0]));
+  objects.push(rect = makeRect([0,-3,0]));
+  objects.push(rect = makeRect([2,0,0]));
+  objects.push(rect = makeRect([2,3,0]));
+  objects.push(rect = makeRect([2,-3,0]));
+}
+
+var dist = 5
+
+var renderFrame = function(){
+  for (var i = 0; i < objects.length; i++){
+    objects[i].rotateOBJY(0.02);
+    objects[i].renderOBJ();
+  }
+  // rect.rotateOBJY(0.02);
+  // rect.renderOBJ();
+  // rect2.renderOBJ();
+  
+}
+
+function makeRect(pos){
+  var rect = new GObject([],pos);
+   rect.tris.push(new Tri([[-3],[-1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
   rect.tris.push(new Tri([[3],[1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
   rect.tris.push(new Tri([[-3],[-1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
   rect.tris.push(new Tri([[3],[1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
@@ -33,14 +56,7 @@ var setup = function(){
      for(var i =0; i < triLen; i++){
      rect.rotateOBJY(1.57)
   }
-}
-
-var dist = 5
-
-var renderFrame = function(){
-  rect.rotateOBJY(0.02);
-  rect.renderOBJ()
-  
+  return rect;
 }
 
 

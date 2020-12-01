@@ -13,7 +13,6 @@ class Tri{
   }
 
   render(){
-    console.log("rendering" + this.v1)
     var pPoints = [];
     this.v01 = madd(this.v1,this.offset);
     this.v02 = madd(this.v2,this.offset);

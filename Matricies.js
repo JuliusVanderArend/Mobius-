@@ -91,3 +91,7 @@ var projectPoint = function(point){
   var out  = mmultiply(projectionMatrix,point)
   return[out[0][0],out[1][0],z]
 }
+
+var vAdd = function(vecA, vecB){
+  return [vecA[0] + vecB[0], vecA[1] + vecB[1], vecA[2] + vecB[2]];
+}
