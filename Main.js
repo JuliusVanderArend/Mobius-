@@ -20,35 +20,27 @@ Number.prototype.clamp = function(min, max) {
 
 
 var setup = function(){
-  tris.push(new Tri([[-3],[-1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
-  tris.push(new Tri([[3],[1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
-  tris.push(new Tri([[-3],[-1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
-  tris.push(new Tri([[3],[1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
-  tris.push(new Tri([[3],[1],[-1]],[[-3],[1],[1]],[[3],[1],[1]]));
-  tris.push(new Tri([[-3],[1],[-1]],[[-3],[1],[-1]],[[-3],[1],[1]]));
-  tris.push(new Tri([[3],[-1],[-1]],[[-3],[-1],[1]],[[3],[-1],[1]]));
-  tris.push(new Tri([[-3],[-1],[-1]],[[-3],[-1],[-1]],[[-3],[-1],[1]]));
-  triLen = tris.length
+  rect = new GObject([])
+  rect.tris.push(new Tri([[-3],[-1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
+  rect.tris.push(new Tri([[3],[1],[-1]],[[-3],[1],[-1]],[[3],[-1],[-1]]));
+  rect.tris.push(new Tri([[-3],[-1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
+  rect.tris.push(new Tri([[3],[1],[1]],[[-3],[1],[1]],[[3],[-1],[1]]));
+  rect.tris.push(new Tri([[3],[1],[-1]],[[-3],[1],[1]],[[3],[1],[1]]));
+  rect.tris.push(new Tri([[-3],[1],[-1]],[[-3],[1],[-1]],[[-3],[1],[1]]));
+  rect.tris.push(new Tri([[3],[-1],[-1]],[[-3],[-1],[1]],[[3],[-1],[1]]));
+  rect.tris.push(new Tri([[-3],[-1],[-1]],[[-3],[-1],[-1]],[[-3],[-1],[1]]));
+  triLen = rect.tris.length
      for(var i =0; i < triLen; i++){
-     tris[i].rotateY(1.57)
+     rect.rotateOBJY(1.57)
   }
 }
 
 var dist = 5
 
 var renderFrame = function(){
-  triLen = tris.length
-  for(var i =0; i < triLen; i++){
-    tris[i].rotateX(0.02);
-    tris[i].rotateZ(0.02)
-    tris[i].rotateY(0.02)
-    tris[i].offset= gloabalOffset;
-
-    // if(dist - tris[i].v01[2] > 0 && dist - tris[i].v02[2] > 0 && dist - tris[i].v03[2] > 0){
-    //   tris[i].render();
-    // }
-    tris[i].render();
-  }
+  rect.rotateOBJY(0.02);
+  rect.renderOBJ()
+  
 }
 
 

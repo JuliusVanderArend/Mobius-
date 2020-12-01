@@ -4,24 +4,30 @@ class GObject{
     this.tris = tris
   }
 
-  function renderOBJ{
-    triLen = tris.length
+  renderOBJ(){
+    var triLen = this.tris.length
     for(var i =0; i < triLen; i++){
-      tris[i].offset= gloabalOffset;
-      tris[i].render();
+      this.tris[i].offset= gloabalOffset;
+      this.tris[i].render();
     }
+  }
 
-  function rotateOBJX(angle){
+  rotateOBJX(angle){
+    var triLen = this.tris.length    
     for(var i =0; i < triLen; i++){
-      tris[i].rotateX(angle);
+      this.tris[i].rotateX(angle);
     }
-  function rotateOBJZ(angle){
+  }
+  rotateOBJZ(angle){
+    var triLen = this.tris.length
     for(var i =0; i < triLen; i++){
-      tris[i].rotateZ(angle);
+      this.tris[i].rotateZ(angle);
     }
-  function rotateOBJY(angle){
+  }
+  rotateOBJY(angle){
+    var triLen = this.tris.length
     for(var i =0; i < triLen; i++){
-      tris[i].rotateY(angle);
+      this.tris[i].rotateY(angle);
     }
   }
 }
