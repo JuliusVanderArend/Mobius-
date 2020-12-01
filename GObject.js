@@ -11,21 +11,17 @@ class GObject{
       tris[i].render();
     }
 
-  function rotateOBJX{
+  function rotateOBJX(angle){
     for(var i =0; i < triLen; i++){
-      tris[i].rotateX(0.02);
+      tris[i].rotateX(angle);
     }
-  function rotateOBJZ{
+  function rotateOBJZ(angle){
     for(var i =0; i < triLen; i++){
-      tris[i].rotateX(0.02);
+      tris[i].rotateZ(angle);
     }
-  function rotateOBJY{
+  function rotateOBJY(angle){
     for(var i =0; i < triLen; i++){
-      tris[i].rotateX(0.02);
+      tris[i].rotateY(angle);
     }
   }
 }
-
-      tris[i].rotateX(0.02);
-      tris[i].rotateZ(0.02)
-      tris[i].rotateY(0.02)
