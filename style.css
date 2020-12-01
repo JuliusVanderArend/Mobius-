@@ -1,0 +1,12 @@
+body{
+  background-color: black;
+}
+
+p{
+  color: white;
+}
+
+#window{
+  line-height: 0;
+  width: 500px;
+}
