@@ -1,26 +1,49 @@
 var cmds = [
-  ["get","take","pick","grab","hold","test"]
+  ["get","take","pick","grab","hold","test"],
+  ["look","veiw"],
+  ["damage","attack","destroy","kill"]
 ]
 
+var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes"];
+var events = ["take","look","attack"];
+
 function takeInput(){
+  var eventType = 111;
+  var objectType = 111;
   inp = input.value.trim().toLowerCase().split(" ");
   // console.log(inp)
+  var foundCMD = false;
+  var foundOBJ = false;
   for(var i = 0; i < cmds.length; i++){
     for(var j = 0; j < cmds[i].length; j++){
-      var nMatchedCommands = 0//keeping track of number of matched commands so not more that one action is performed
       for(var f = 0; f < inp.length; f++){
-        console.log(inp[f]);
-        if (cmds[i][j] == inp[f]){
-          if(nMatchedCommands < 1){
-            console.log("matched")
-            output.innerHTML = "item taken"
-            nMatchedCommands ++;
-          }
-          if(nMatchedCommands >0){
-            output.innerHTML = "im confused I cant do multiple things at once"
+        if (cmds[0][j] == inp[f] && foundCMD ==false){
+          eventType = 0;
+          foundCMD = true;
+        }
+        if (cmds[1][j] == inp[f] && foundCMD ==false){
+          eventType = 1;
+          foundCMD = true;
+        }
+        if (cmds[2][j] == inp[f] && foundCMD ==false){
+          eventType = 2;
+          foundCMD = true;
+        }
+        else{
+          for(var g = 0; g < iObjects.length; g++){
+            if (iObjects[g] == inp[f] && foundOBJ == false){
+              objectType = g;
+              foundOBJ = true;
+            }
           }
         }
       }
     }
   }
-}
+  switch(activeRoom){
+    case("room1"):
+      room1(eventType,objectType)
+    
+  }
+  // return([eventType, objectType])
+} 
