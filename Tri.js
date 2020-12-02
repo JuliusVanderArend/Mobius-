@@ -26,19 +26,19 @@ class Tri{
     var p2 = [pPoints[2][0]*scaleFactor/resolution,pPoints[2][1]*scaleFactor/resolution]
     var points =  drawLine(p0,p1);
     for(var i = 0; i < (points.length); i++){
-      drawPix(pixSize,points[i][0]*resolution+500,points[i][1]*resolution+ 250);
+      drawPix(pixSize,points[i][0]*resolution+(canvas.width/2),points[i][1]*resolution+ (canvas.height/2));
     }
     points =  drawLine(p1,p2);
     for(var i = 0; i < points.length; i++){
-      drawPix(pixSize,points[i][0]*resolution+500,points[i][1]*resolution+ 250);
+      drawPix(pixSize,points[i][0]*resolution+canvas.width/2,points[i][1]*resolution+ (canvas.height/2));
     }
     points =  drawLine(p2,p0);
     for(var i = 0; i < points.length; i++){
-      drawPix(pixSize,points[i][0]*resolution+500,points[i][1]*resolution+ 250);
+      drawPix(pixSize,points[i][0]*resolution+canvas.width/2,points[i][1]*resolution+ (canvas.height/2));
     }
 
     for (var i = 0; i < pPoints.length; i++){
-      drawPix(70 * pPoints[i][2],pPoints[i][0]*scaleFactor+500,pPoints[i][1]*scaleFactor+ 250);
+      drawPix(70 * pPoints[i][2],pPoints[i][0]*scaleFactor+canvas.width/2,pPoints[i][1]*scaleFactor+ (canvas.height/2));
     }
   }
 
