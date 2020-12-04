@@ -1,18 +1,92 @@
-function room1(event, object){
-  console.log(object)
-  var rObjects = ["fuel canister","pipes"];
-  if(events[event] == "look"){
-    if(object == 111){
-      output.innerHTML = "you are standing in a musty maintinace shaft, water drips from broken pipes and a flickering light shines. You can see some rusty fuel canisters strewn about."
+function bridge(event, object){
+  // var exits = [["e","corridor"],["s","lounge"]];
+  if (object == "n" ||object == "e"||object == "s"||object == "w"){
+    if(object == "w"){
+      activeRoom = "corridor1";
+      output.innerHTML ="you are in corridor 1";
     }
-    if(iObjects[object] == "pipes"){
-      output.innerHTML = "The pipes appear to be fuel lines, they are full of cracks and leaking fuel"
+    else if(object == "s"){
+      activeRoom = "lounge";
+      output.innerHTML ="you are in the lounge";
     }
-    if(iObjects[object] == "fuel"){
-      output.innerHTML = "they canisters look worn, but they still have some fuel in them"
+    else{
+      output.innerHTML = "You cant go that way.";
     }
   }
-  
+  if(event == "look"){
+    output.innerHTML = "bridge";
+  }
 }
+
+function lounge(event, object){
+  if (object == "n" ||object == "e"||object == "s"||object == "w"){
+    if(object == "n"){
+      activeRoom = "bridge";
+      output.innerHTML ="you are in the bridge";
+    }
+    else if(object == "e"){
+      activeRoom = "kitchen";
+      output.innerHTML ="you are in the kitchen";
+    }
+    else if(object == "s"){
+      activeRoom = "sleeping quarters";
+      output.innerHTML ="you are in the sleeping quarters";
+    }
+
+    
+    else{
+      output.innerHTML = "You cant go that way.";
+    }
+  }
+  if(event == "look"){
+    output.innerHTML = "lounge";
+  }
+}
+
+function corridor1(event, object){
+  if (object == "n" ||object == "e"||object == "s"||object == "w"){
+    if(object == "e"){
+      activeRoom = "bridge";
+      output.innerHTML ="you are in the bridge";
+    }
+    else{
+      output.innerHTML = "You cant go that way.";
+    }
+  }
+  if(event == "look"){
+    output.innerHTML = "corridor1";
+  }
+}
+
+function kitchen(event, object){
+  console.log("kitchen");
+  if (object == "n" ||object == "e"||object == "s"||object == "w"){
+    if(object == "w"){
+      activeRoom = "lounge";
+      output.innerHTML ="you are in the lounge";
+    }
+    else{
+      output.innerHTML = "You cant go that way.";
+    }
+  }
+  if(event == "look"){
+    output.innerHTML = "kitchen";
+  }
+}
+
+function sleeping_quarters(event, object){
+  console.log("quarters")
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // output.innerHTML = (events[eventType] + " " + iObjects[objectType]);

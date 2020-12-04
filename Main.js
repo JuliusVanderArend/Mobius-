@@ -1,19 +1,5 @@
 
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-ctx.fillStyle = "white";
-ctx.font = "20px Arial";
-var output = document.getElementById("outText");
-var input = document.getElementById("inputText");
-var tris = [];
-var scaleFactor = 300;
-var angle = 0;
-var resolution = 4;
-var pixSize = 3;
-var gloabalOffset = [0,0,0];
-var objects =[];
-const moveSpeed = 0.4;
-var activeRoom = "room1";
+
 
 
 Number.prototype.clamp = function(min, max) {
@@ -33,9 +19,9 @@ var setup = function(){
 var dist = 5
 
 var renderFrame = function(){
+  clearCTX();
   for (var i = 0; i < objects.length; i++){
     // objects[i].rotateOBJY(0.02);
-    // objects[i].rotateOBJZ(0.02);
     // objects[i].rotateOBJX(0.02);
     // objects[i].rotateOBJZ(0.02);
     objects[i].renderOBJ();
@@ -71,24 +57,37 @@ function makeRect(pos){
 
 
 setup()
+renderFrame();
 document.addEventListener('keydown', function(event) {
     if(event.key == "a") {
        gloabalOffset = [gloabalOffset[0]+moveSpeed,gloabalOffset[1],gloabalOffset[2]]
+       clearCTX();
+       renderFrame();
     }
     if(event.key == "d") {
        gloabalOffset = [gloabalOffset[0]-moveSpeed,gloabalOffset[1],gloabalOffset[2]]
+       clearCTX();
+       renderFrame();
     }
     if(event.key == "w") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1],gloabalOffset[2]+moveSpeed]
+       clearCTX();
+       renderFrame();
     }
     if(event.key == "s") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1],gloabalOffset[2]-moveSpeed]
+       clearCTX();
+       renderFrame();
     }
     if(event.key == "q") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1]+moveSpeed,gloabalOffset[2]]
+       clearCTX();
+       renderFrame();
     }
     if(event.key == "e") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1]-moveSpeed,gloabalOffset[2]]
+       clearCTX();
+       renderFrame();
     }
     if(event.keyCode == 13){
       takeInput();
@@ -97,8 +96,8 @@ document.addEventListener('keydown', function(event) {
 
     }
 });
-window.setInterval(renderFrame,30);
-window.setInterval(clearCTX,40);
+// window.setInterval(renderFrame,40);
+
 
 // for(var i=0; i <1; i++){
 //   renderFrame()

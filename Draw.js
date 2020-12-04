@@ -28,7 +28,7 @@
 
 var drawPix = function(size,x,y){
   ctx.font = size+ "px Arial";
-  ctx.fillText(":)",x,y);
+  ctx.fillText("::",x,y);
 }
 
 var clearCTX = function(){

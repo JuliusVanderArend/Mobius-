@@ -1,16 +1,20 @@
 var cmds = [
   ["get","take","pick","grab","hold","test"],
   ["look","veiw"],
-  ["damage","attack","destroy","kill"]
+  ["damage","attack","destroy","kill"],
+  ["go"]
 ]
 
-var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes"];
-var events = ["take","look","attack"];
+var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
+var events = ["take","look","attack","go"];
 
 function takeInput(){
+  // console.log(activeRoom);
+
   var eventType = 111;
   var objectType = 111;
   inp = input.value.trim().toLowerCase().split(" ");
+  input.value = "";
   // console.log(inp)
   var foundCMD = false;
   var foundOBJ = false;
@@ -35,15 +39,30 @@ function takeInput(){
               objectType = g;
               foundOBJ = true;
             }
+            // switch(iObjects[g]){
+            //   case()
+            // }
           }
         }
       }
     }
   }
   switch(activeRoom){
-    case("room1"):
-      room1(eventType,objectType)
-    
+    case("bridge"):
+      bridge(events[eventType],iObjects[objectType]);
+      break;
+    case("lounge"):
+      lounge(events[eventType],iObjects[objectType]);
+      break;
+    case("corridor1"):
+      corridor1(events[eventType],iObjects[objectType]);
+      break;
+    case("kitchen"):
+      kitchen(events[eventType],iObjects[objectType]);
+      break;
+    case("sleeping quarters"):
+      sleeping_quarters(events[eventType],iObjects[objectType]);
+      break;
   }
   // return([eventType, objectType])
 } 
