@@ -12,4 +12,4 @@ var pixSize = 2;
 var gloabalOffset = [0,0,0];
 var objects =[];
 const moveSpeed = 0.4;
-var activeRoom = "bridge";
+var inventory = []

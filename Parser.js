@@ -5,14 +5,14 @@ var cmds = [
   ["go"]
 ]
 
-var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
+// var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
 var events = ["take","look","attack","go"];
 
 function takeInput(){
-  // console.log(activeRoom);
+  console.log(activeRoom);
 
   var eventType = 111;
-  var objectType = 111;
+  var parsedObject = 111;
   inp = input.value.trim().toLowerCase().split(" ");
   input.value = "";
   // console.log(inp)
@@ -33,36 +33,23 @@ function takeInput(){
           eventType = 2;
           foundCMD = true;
         }
+        if (cmds[3][j] == inp[f] && foundCMD ==false){
+          eventType = 3;
+          foundCMD = true;
+        }
         else{
-          for(var g = 0; g < iObjects.length; g++){
-            if (iObjects[g] == inp[f] && foundOBJ == false){
-              objectType = g;
-              foundOBJ = true;
+          for(var g = 0; g < activeRoom.objects.length; g++){
+            for(var h = 0; h <activeRoom.objects[g].length; h++){
+              if (activeRoom.objects[g][h] == inp[f] && foundOBJ == false){
+                parsedObject = activeRoom.objects[g][0] ;
+                foundOBJ = true;
+              }
             }
-            // switch(iObjects[g]){
-            //   case()
-            // }
           }
         }
       }
     }
   }
-  switch(activeRoom){
-    case("bridge"):
-      bridge(events[eventType],iObjects[objectType]);
-      break;
-    case("lounge"):
-      lounge(events[eventType],iObjects[objectType]);
-      break;
-    case("corridor1"):
-      corridor1(events[eventType],iObjects[objectType]);
-      break;
-    case("kitchen"):
-      kitchen(events[eventType],iObjects[objectType]);
-      break;
-    case("sleeping quarters"):
-      sleeping_quarters(events[eventType],iObjects[objectType]);
-      break;
-  }
-  // return([eventType, objectType])
+  activeRoom.input(eventType, parsedObject);
+  
 } 
