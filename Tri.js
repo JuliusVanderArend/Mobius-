@@ -1,3 +1,7 @@
+
+wid = canvas.width;
+hig = canvas.height;
+
 class Tri{
   constructor(v1,v2,v3,){
     this.v1 = v1;
@@ -20,25 +24,24 @@ class Tri{
     pPoints.push(projectPoint(this.v01)); 
     pPoints.push(projectPoint(this.v02));
     pPoints.push(projectPoint(this.v03)); 
-    // console.log(pPoints);
     var p0 = [pPoints[0][0]*scaleFactor/resolution,pPoints[0][1]*scaleFactor/resolution]
     var p1 = [pPoints[1][0]*scaleFactor/resolution,pPoints[1][1]*scaleFactor/resolution]
     var p2 = [pPoints[2][0]*scaleFactor/resolution,pPoints[2][1]*scaleFactor/resolution]
     var points =  drawLine(p0,p1);
     for(var i = 0; i < (points.length); i++){
-      drawPix(pixSize,points[i][0]*resolution+(canvas.width/2),points[i][1]*resolution+ (canvas.height/2));
+      drawPix(pixSize,points[i][0]*resolution+(wid/2),points[i][1]*resolution+ (hig/2));
     }
     points =  drawLine(p1,p2);
     for(var i = 0; i < points.length; i++){
-      drawPix(pixSize,points[i][0]*resolution+canvas.width/2,points[i][1]*resolution+ (canvas.height/2));
+      drawPix(pixSize,points[i][0]*resolution+wid/2,points[i][1]*resolution+ (hig/2));
     }
     points =  drawLine(p2,p0);
     for(var i = 0; i < points.length; i++){
-      drawPix(pixSize,points[i][0]*resolution+canvas.width/2,points[i][1]*resolution+ (canvas.height/2));
+      drawPix(pixSize,points[i][0]*resolution+wid/2,points[i][1]*resolution+ (hig/2));
     }
 
     for (var i = 0; i < pPoints.length; i++){
-      drawPix(25 * pPoints[i][2],pPoints[i][0]*scaleFactor+canvas.width/2,pPoints[i][1]*scaleFactor+ (canvas.height/2));
+      drawPix(25 * pPoints[i][2],pPoints[i][0]*scaleFactor+wid/2,pPoints[i][1]*scaleFactor+ (hig/2));
     }
   }
 

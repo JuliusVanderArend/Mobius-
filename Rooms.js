@@ -4,11 +4,12 @@
  class Bridge{
    constructor(){
      this.objects = [["id","card"],["body","corpse","man"],["lounge","s","south"],["c1","corridor","west","w"]]
-     this.descrip = "you are in the bridge, you spot a body hunched over a controll pannel."
+     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies nearby."
    }
    init(){
      output.innerHTML = this.descrip
      activeRoom = bridge
+     setSceneMesh(bridgeMesh)
    }
 
    input(event, object){
@@ -20,7 +21,7 @@
          output.innerHTML = "this is an id card, it may be usefull for opening some doors...."
        }
        else if(object == "body"){
-         output.innerHTML = "you turn over the body to revel a pistol grasped in the mans hand."
+         output.innerHTML = "you turn over the body to reveal a pistol grasped in the mans hand."
          this.objects.push(["pistol","gun","weapon"])
        }
        else if(object == "pistol"){
@@ -52,7 +53,7 @@
            output.innerHTML = "you already took the pistol."
          }
        }
-     }
+     } 
 
      if(events[event] == "go"){
        if(object == "lounge"){
@@ -61,23 +62,43 @@
        else if(object == "c1"){
          c1.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
 
  class Lounge{
    constructor(){
-     this.objects = [["quarters","sleeping","s","south"],["kitchen","e","east"],["airlock","w","west"],["bridge","n","north"]]
-     this.descrip = "you are in the lounge."
+     this.objects = [["quarters","sleeping","s","south"],["kitchen","e","east"],["airlock","w","west"],["bridge","n","north"],["gfg","gravitational","feild","generator","gravity"]]
+     this.descripNullG = "You take your first step into the lounge.....and go flying into the ceiling? it appears the gravitational feild generator (GFG) is busted, a cup of coffe hangs limply in the abbys before you. How did this place fall into such disrepair?..... it was fine yesterday...."
+     this.descrip = ""
+     this.hasGravity = false
+     this.launchTrys = 0;
+     this.failtexts = ["You launch off of the south wall and majestically drift through the lounge,....before unceremoniously smaking into a wall. It appears you have missed the door.","Once again you lauch twords the door, once again you bury your nose in the opposite wall.","You sail into the opposite wall nearly smaking into a deadly looking support gurdur, some gravity would be really nice right about now...."]
    }
    init(){
-     output.innerHTML = this.descrip
+     if(this.hasGravity == false){
+       output.innerHTML = this.descripNullG
+     }
+     else{
+      output.innerHTML = this.descrip
+     }
      activeRoom = lounge
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+       }
+       if(object == "gfg"){
+         if(this.hasGravity == false){
+          output.innerHTML = "Something has eaten through the power conduit that supplies the GFG, it should be a simple fix being the experienced engineer you are."
+         }
+         else{
+           output.innerHTML = "The feild generator hums calmly, indifferent to your existance."
+         }
        }
      }
 
@@ -92,23 +113,71 @@
          quarters.init()
        }
        else if(object == "kitchen"){
-         kitchen.init()
+         if(this.hasGravity == false){
+           if(this.launchTrys > 2){
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             death()
+           }
+           else{
+            output.innerHTML = this.failtexts[this.launchTrys]
+            this.launchTrys ++
+           }
+         }
+         else{
+           kitchen.init()
+         }
+         
        }
        else if(object == "airlock"){
-         airlock.init()
+         if(this.hasGravity == false){
+           if(this.launchTrys > 2){
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             death()
+           }
+           else{
+            output.innerHTML = this.failtexts[this.launchTrys]
+            this.launchTrys ++
+           }
+         }
+         else{
+           airlock.init()
+         }
        }
        else if(object == "bridge"){
-         bridge.init()
+         if(this.hasGravity == false){
+           if(this.launchTrys > 2){
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             death()
+           }
+           else{
+            output.innerHTML = this.failtexts[this.launchTrys]
+            this.launchTrys ++
+           }
+         }
+         else{
+           bridge.init()
+         }
+       }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
+     }
+     if(events[event] == "fix"){
+       if(object == "gfg"){
+         output.innerHTML = "With a warm glow and thick electric hum, the feild generator comes to life, you feel good to be back on solid ground."
+         this.hasGravity = true
        }
      }
    }
+   
  }
 
  
    class Quarters{
    constructor(){
-     this.objects = [["lounge","n","north"],["medbay","w","west"]]
-     this.descrip = "you are in the sleeping quarters."
+     this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"]]
+     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines, the medbay is to your east, the lounge is north."
+     this.magTaken = false
    }
    init(){
      output.innerHTML = this.descrip
@@ -119,11 +188,25 @@
        if(object == 111){
          output.innerHTML = this.descrip
        }
+       else if(object == "mag" && this.magTaken == false){
+         output.innerHTML = "you can just read the date as '2117' before the magazine turns into dust in your hands."
+         this.magTaken = true
+       }
+       else if(object == "mag" && this.magTaken == true){
+         output.innerHTML = "the magazine is destroyed, you can no longer read it."
+       }
      }
 
      if(events[event] == "take"){
        if(object == 111){
          output.innerHTML = "take what?"
+       }
+       else if(object == "mag" && this.magTaken==false){
+         output.innerHTML = "as you pick up the magazine, it disintigrates into dust."
+         this.magTaken = true
+       }
+       else if(object == "mag" && this.magTaken==true){
+         output.innerHTML = "you grasp at the magazines dust in the air, but it is a futile effort."
        }
      }
 
@@ -132,8 +215,18 @@
          lounge.init()
        }
        else if(object == "medbay"){
-         medbay.init()
+         if(inventory.includes("id")){
+           medbay.init()
+         }
+         else{
+           output.innerHTML = "The door is locked, only doctors can access the medbay"
+         }
+         
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
+       
      }
    }
  }
@@ -164,13 +257,16 @@
        if(object == "e2"){
          e2.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
 
     class Medbay{
    constructor(){
-     this.objects = [["quarters","sleeping","e","east"],["c2","corridor","e","east"]]
+     this.objects = [["quarters","sleeping","e","east"],["c2","corridor","w","west"]]
      this.descrip = "you are in the medbay."
    }
    init(){
@@ -197,6 +293,9 @@
        else if(object == "c2"){
          c2.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
@@ -209,6 +308,7 @@
    init(){
      output.innerHTML = this.descrip
      activeRoom = c1
+     setSceneMesh(corridor1Mesh)
    }
    input(event,object){
      if(events[event] == "look"){
@@ -229,6 +329,9 @@
        }
        else if(object == "airlock"){
          airlock.init()
+       }
+       else{
+         output.innerHTML = "You can't go that way."
        }
      }
    }
@@ -266,6 +369,9 @@
       else if(object == "e1"){
         e1.init()
       }
+      else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
@@ -295,6 +401,9 @@
      if(events[event] == "go"){
        if(object == "lounge"){
          lounge.init()
+       }
+       else{
+         output.innerHTML = "You can't go that way."
        }
      }
    }
@@ -333,6 +442,9 @@
        else if(object == "airlock"){
          airlock.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
@@ -366,6 +478,9 @@
        else if(object == "coms"){
          coms.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
 
      }
    }
@@ -397,6 +512,9 @@
      if(events[event] == "go"){
        if(object == "e1"){
          e1.init()
+       }
+       else{
+         output.innerHTML = "You can't go that way."
        }
      }
    }
@@ -434,11 +552,16 @@
        else if(object == "lounge"){
          lounge.init()
        }
+       else{
+         output.innerHTML = "You can't go that way."
+       }
      }
    }
  }
 
-
+function death(){
+  // output.innerHTML = "you die"
+}
 
 
 
@@ -458,4 +581,5 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = bridge
+activeRoom = quarters
+output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."

@@ -2,11 +2,12 @@ var cmds = [
   ["get","take","pick","grab","hold","test"],
   ["look","veiw"],
   ["damage","attack","destroy","kill"],
-  ["go"]
+  ["go"],
+  ["fix","repair","mend"]
 ]
 
 // var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
-var events = ["take","look","attack","go"];
+var events = ["take","look","attack","go","fix"];
 
 function takeInput(){
   console.log(activeRoom);
@@ -35,6 +36,10 @@ function takeInput(){
         }
         if (cmds[3][j] == inp[f] && foundCMD ==false){
           eventType = 3;
+          foundCMD = true;
+        }
+        if (cmds[4][j] == inp[f] && foundCMD ==false){
+          eventType = 4;
           foundCMD = true;
         }
         else{
