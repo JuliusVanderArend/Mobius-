@@ -3,8 +3,8 @@
  
  class Bridge{
    constructor(){
-     this.objects = [["id","card"],["body","corpse","man"],["lounge","s","south"],["c1","corridor","west","w"]]
-     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies nearby."
+     this.objects = [["id","card"],["body","corpse","man"],["lounge","s","south"],["c1","corridor","west","w"], ["console","consoles","pc","computer"]]
+     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies across a controll pannel with some consoles nearby."
    }
    init(){
      output.innerHTML = this.descrip
@@ -26,6 +26,9 @@
        }
        else if(object == "pistol"){
          output.innerHTML = "it apears to be an older model with 2 rounds left in the magazine, the grip is inscribed 'Weyland-Yutani'."
+       }
+       else if(object == "console"){
+
        }
      }
 
@@ -52,6 +55,9 @@
          else{
            output.innerHTML = "you already took the pistol."
          }
+       }
+       else if(object == "body"){
+         output.innerHTML = "seriously.... it weighs like 200 pounds, the body isn't going anywhere."
        }
      } 
 
@@ -175,17 +181,19 @@
  
    class Quarters{
    constructor(){
-     this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"]]
+     this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"],["pod","hypersleep","bed"],["ceiling","roof"]]
      this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines, the medbay is to your east, the lounge is north."
      this.magTaken = false
    }
    init(){
      output.innerHTML = this.descrip
      activeRoom = quarters
+     setSceneMesh(quartersMesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
+         setSceneMesh(quartersMesh)
          output.innerHTML = this.descrip
        }
        else if(object == "mag" && this.magTaken == false){
@@ -194,6 +202,12 @@
        }
        else if(object == "mag" && this.magTaken == true){
          output.innerHTML = "the magazine is destroyed, you can no longer read it."
+       }
+       else if(object == "pod"){
+         output.innerHTML = "the pod is constructed of a brushed metal base with a sleeping compartment inside, above the pod there is a petal-shaped glass lid."
+       }
+       else if(object == "ceiling"){
+         output.innerHTML = "spidercracks run accross the delapidated ceiling, the text: 'HELP ME!' is carved into the metal, strange........"
        }
      }
 
@@ -303,7 +317,7 @@
     class C1{
    constructor(){
      this.objects = [["bridge","e","east"],["airlock","s","south"]]
-     this.descrip = "you are in 1st maintinace corridor."
+     this.descrip = "you are in 1st maintinace corridor, you are greeted by a chorus of bleep-bloops. The mantinace bot-9000 has just reactivated: 'DIEEEEEEEEE'. Oh dear, this one apears to be malfunctioning."
    }
    init(){
      output.innerHTML = this.descrip
@@ -378,27 +392,48 @@
 
     class Kitchen{
    constructor(){
-     this.objects = [["lounge","w","west"]]
-     this.descrip = "you are in the kitchen."
+     this.objects = [["lounge","w","west"],["body","feet","man","corpse"]]
+     this.descrip = "you enter the kitchen, and are greeted by absolute stench. 50 year old space-lasagna dosent smell too good aparently. in the corner you see a pair of feet dangling out of a loose mantinace shaft."
    }
    init(){
      output.innerHTML = this.descrip
      activeRoom = kitchen
    }
    input(event,object){
+     console.log(events[event])
+     console.log("look")
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
        }
-     }
-
-     if(events[event] == "take"){
-       if(object == 111){
-         output.innerHTML = "take what?"
+       else if(object == "body"){
+         output.innerHTML = "you tug on the pair of feet, and a grubby man wearing engineer's clothes flops to the floor. The mans face is covered in red, moldy lasagna-looking goop, a key inscribed 'robot controller-9000' is hung around his neck."
+         this.objects.push(["key","robot","controller","9000"])
+         console.log(this.objects)
        }
+       else if(object == "key"){
+         output.innerHTML = "the key is roughly cut and etched with tally marks, you wonder what this means."
+      }
      }
 
-     if(events[event] == "go"){
+     else if(events[event] == "take"){
+       console.log("take")
+       if(object == 111){
+         output.innerHTML =  "take what?"
+       }
+       else if(object == "key")
+       console.log("key")
+        if(inventory.includes("key")==false){
+          output.innerHTML = "you take the key and place it around your neck."
+          inventory.push("key")
+        }
+        else{
+          output.innerHTML = "you already took the key."
+        }
+     }
+
+     else if(events[event] == "go"){
+       console.log("go")
        if(object == "lounge"){
          lounge.init()
        }
@@ -582,4 +617,4 @@ reactor = new Reactor()
 airlock  = new Airlock()
 
 activeRoom = quarters
-output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."
+output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         
