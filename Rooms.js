@@ -4,7 +4,7 @@
  class Bridge{
    constructor(){
      this.objects = [["id","card"],["body","corpse","man"],["lounge","s","south"],["c1","corridor","west","w"], ["console","consoles","pc","computer"]]
-     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies across a controll pannel with some consoles nearby."
+     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies across a control pannel with some consoles nearby."
    }
    init(){
      output.innerHTML = this.descrip
@@ -28,7 +28,13 @@
          output.innerHTML = "it apears to be an older model with 2 rounds left in the magazine, the grip is inscribed 'Weyland-Yutani'."
        }
        else if(object == "console"){
-
+         output.innerHTML = "you power up the console, the screen flickers to life displaying the last entry...."
+         clearCTX()
+         ctx.font = "11px monospace";
+         ctx.fillText("// INITIALIZING..LOADING ROM..CHEKCING PERIFERALS...321...ACTIVATE//",10,10)
+         ctx.fillText("//CAPTAINS LOG: status: desperate, food suplies are low....",10,30)
+         ctx.fillText("life signs: fading.. we wont last much longDFSAAAAAAAAA42314HHHH//",10,50)
+         ctx.fillText("//END MESSAGE//",10,70)
        }
      }
 
@@ -77,9 +83,9 @@
 
  class Lounge{
    constructor(){
-     this.objects = [["quarters","sleeping","s","south"],["kitchen","e","east"],["airlock","w","west"],["bridge","n","north"],["gfg","gravitational","feild","generator","gravity"]]
-     this.descripNullG = "You take your first step into the lounge.....and go flying into the ceiling? it appears the gravitational feild generator (GFG) is busted, a cup of coffe hangs limply in the abbys before you. How did this place fall into such disrepair?..... it was fine yesterday...."
-     this.descrip = ""
+     this.objects = [["quarters","sleeping","s","south"],["kitchen","e","east"],["airlock","w","west"],["bridge","n","north"],["gfg","gravitational","feild","generator","gravity"],["coffee","cup"]]
+     this.descripNullG = "You take your first step into the lounge.....and go flying into the ceiling? it appears the gravitational feild generator (GFG) is busted, a cup of coffee hangs limply in the abbys before you. How did this place fall into such disrepair?..... it was fine yesterday...."
+     this.descrip = "You are in the Lounge, normally this place is full of crewmembers engaged in various receational activities, but it is rather dead now... <br><br>the kitchen is east<br><br> the bridge is north<br><br> the airlock is west<br><br> the sleeping quarters are south."
      this.hasGravity = false
      this.launchTrys = 0;
      this.failtexts = ["You launch off of the south wall and majestically drift through the lounge,....before unceremoniously smaking into a wall. It appears you have missed the door.","Once again you lauch twords the door, once again you bury your nose in the opposite wall.","You sail into the opposite wall nearly smaking into a deadly looking support gurdur, some gravity would be really nice right about now...."]
@@ -98,7 +104,7 @@
        if(object == 111){
          output.innerHTML = this.descrip
        }
-       if(object == "gfg"){
+       else if(object == "gfg"){
          if(this.hasGravity == false){
           output.innerHTML = "Something has eaten through the power conduit that supplies the GFG, it should be a simple fix being the experienced engineer you are."
          }
@@ -106,11 +112,17 @@
            output.innerHTML = "The feild generator hums calmly, indifferent to your existance."
          }
        }
+       else if(object == "coffee"){
+         output.innerHTML = "the coffee floats by, ignoring you completly"
+       }
      }
 
      if(events[event] == "take"){
        if(object == 111){
          output.innerHTML = "take what?"
+       }
+       else if(object == "coffee"){
+         output.innerHTML = "You grab at the coffee but only succeed in getting it all over your shirt."
        }
      }
 
@@ -182,7 +194,7 @@
    class Quarters{
    constructor(){
      this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"],["pod","hypersleep","bed"],["ceiling","roof"]]
-     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines, the medbay is to your east, the lounge is north."
+     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines<br><br> the medbay is to your east<br><br> the lounge is north."
      this.magTaken = false
    }
    init(){
@@ -280,11 +292,12 @@
 
     class Medbay{
    constructor(){
-     this.objects = [["quarters","sleeping","e","east"],["c2","corridor","w","west"]]
-     this.descrip = "you are in the medbay."
+     this.objects = [["quarters","sleeping","e","east"],["c2","corridor","w","west"],["droid","android","robot","body"]]
+     this.descrip = "You are in the medbay, this appears to be the only part of the ship protected from decay. The walls still have a bright sterile gleam. Unfourtunatley this has not done much for the inhabitants of this room...A dead android is slumped over a console. <br><br>the sleeping quarters are east<br><br>the second maintinace corridor is west."
    }
    init(){
-     output.innerHTML = this.descrip
+     output.innerHTML = "As you palm the doctors ID on the scanner, the door to the medbay slides open."
+     output.innerHTML += this.descrip
      activeRoom = medbay
    }
    input(event,object){
@@ -292,11 +305,27 @@
        if(object == 111){
          output.innerHTML = this.descrip
        }
+       else if(object == "droid"){
+         output.innerHTML = "the android's sallow skin hangs loosly around his dead eyes. poor sod, probably locked himself in the medbay an ran out of power...<br><br>The android is wearing a space suit which appears to be in good condition, this could be usefull...."
+       }
      }
 
      if(events[event] == "take"){
        if(object == 111){
          output.innerHTML = "take what?"
+       }
+       else if(object == "droid"){
+         output.innerHTML = "you tug at the androids arm, but it reffuses to budge."
+       }
+     }
+
+     if(events[event] == "fix"){
+       if(inventory.includes("battery")){
+         output.innerHTML = "the android springs to life:<br><br>'Hello, I must say, I am terribly thankfull for your help!"
+         inventory.push("droid")
+       }
+       else{
+         output.innerHTML = "you try to fix him, but it's no use, he needs a new battery."
        }
      }
 
@@ -616,5 +645,5 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = quarters
+activeRoom = bridge
 output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         

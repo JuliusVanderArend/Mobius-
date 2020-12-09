@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 ctx.fillStyle = "white";
-ctx.font = "20px Arial";
+ctx.font = "100px Arial";
 var output = document.getElementById("outText");
 var input = document.getElementById("inputText");
 var tris = [];
@@ -13,3 +13,4 @@ var gloabalOffset = [0,0,0];
 var objects =[];
 const moveSpeed = 0.4;
 var inventory = [];
+var movesTaken = 0;

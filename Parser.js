@@ -6,7 +6,7 @@ var cmds = [
   ["fix","repair","mend"]
 ]
 
-var alienTexts = [".....you hear a rumbling deep within the hull of this ship.. what could it be?",".....An alein, metalic screach echoes through the room.","You here a blunt thump from somewhere in the ship.... must just be your imagination."]
+var alienTexts = ["<br><br>.....you hear a rumbling deep within the hull of this ship.. what could it be?","<br><br>.....An alein, metalic screach echoes through the room.","<br><br>You here a blunt thump from somewhere in the ship.... must just be your imagination."]
 
 var moveVerbs = ["n","e","s","w","north","east","south","west","lounge","medbay"];
 // var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
@@ -14,7 +14,8 @@ var events = ["take","look","attack","go","fix"];
 
 function takeInput(){
   console.log(activeRoom);
-
+  movesTaken ++;
+  console.log(movesTaken)
   var eventType = 111;
   var parsedObject = 111;
   inp = input.value.trim().toLowerCase().split(" ");
@@ -68,7 +69,7 @@ function takeInput(){
     }
   }
   activeRoom.input(eventType, parsedObject);
-  if(Math.random() < 0.2){
+  if(Math.random() < (movesTaken/200)+0.2){
     output.innerHTML += alienTexts[Math.floor(Math.random() * alienTexts.length)];
   }
 } 
