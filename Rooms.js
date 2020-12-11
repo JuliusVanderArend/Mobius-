@@ -366,42 +366,51 @@
      this.descrip = "you are in 1st maintinace corridor, you spot a deactivated maintinace droid that looks as if it was half way through mending a large alien shaped hole in the wall....<br><br>The bridge is east<br><br>The Airlock is south."
      this.droidEventTrigger = false
    }
+    droidInteraction(){
+     output.innerHTML = "you have woken the maintinace droid from it's deep sleep<br><br>THREAT DETECTED...AUTOMATED DEFENCE PROCEDURE INTITIATED....PROVIDE SYSTEM KEY OR BE DISSASEMBLED IMEDIATLEY!<br><br> Oh dear, the droid appears to still be a bit...startled...<br><br>Your options are...."
+     if(inventory.includes("pistol")){
+       output.innerHTML+= "<br><br>shoot the droid"
+     }
+   }
    init(){
      output.innerHTML = this.descrip
      activeRoom = c1
      setSceneMesh(corridor1Mesh)
    }
    input(event,object){
-     
-     if(events[event] == "look"){
-       if(object == 111){
-         output.innerHTML = this.descrip
-       }
-       if(object == "droid") {
-         
-       }
+     if(this.droidEventTrigger){
+       console.log("droid interact")
+       this.droidInteraction()
      }
+     else{
+      if(events[event] == "look"){
+        if(object == 111){
+          output.innerHTML = this.descrip
+        }
+        if(object == "droid") {
+          this.droidEventTrigger = true
+          this.droidInteraction()
+        }
+      }
 
-     if(events[event] == "take"){
-       if(object == 111){
-         output.innerHTML = "take what?"
-       }
+      if(events[event] == "take"){
+        if(object == 111){
+          output.innerHTML = "take what?"
+        }
+      }
+
+      if(events[event] == "go"){
+        if(object == "bridge"){
+          bridge.init()
+        }
+        else if(object == "airlock"){
+          airlock.init()
+        }
+        else{
+          output.innerHTML = "You can't go that way."
+        }
+      }
      }
-
-     if(events[event] == "go"){
-       if(object == "bridge"){
-         bridge.init()
-       }
-       else if(object == "airlock"){
-         airlock.init()
-       }
-       else{
-         output.innerHTML = "You can't go that way."
-       }
-     }
-   }
-   droidInteraction(){
-
    }
  }
 
@@ -692,5 +701,5 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = airlock
+activeRoom = c1
 output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         
