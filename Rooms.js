@@ -94,7 +94,7 @@
      if(this.hasGravity == false){
        output.innerHTML = this.descripNullG
      }
-     else{
+     else if(this.hasGravity){
       output.innerHTML = this.descrip
      }
      activeRoom = lounge
@@ -102,7 +102,13 @@
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
-         output.innerHTML = this.descrip
+         if(this.hasGravity){
+           output.innerHTML = this.descrip
+         }
+         else{
+           output.innerHTML = this.descripNullG
+         }
+         
        }
        else if(object == "gfg"){
          if(this.hasGravity == false){
@@ -307,6 +313,10 @@
        }
        else if(object == "droid"){
          output.innerHTML = "the android's sallow skin hangs loosly around his dead eyes. poor sod, probably locked himself in the medbay an ran out of power...<br><br>The android is wearing a space suit which appears to be in good condition, this could be usefull...."
+         this.objects.push(["spacesuit","space","suit"])
+       }
+       else if(object == "spacesuit"){
+         output.innerHTML ="The suit is sleek white in colour and thickly padded<br><br>This should allow you to survive the cold void of space... could be pretty usefull"
        }
      }
 
@@ -317,12 +327,19 @@
        else if(object == "droid"){
          output.innerHTML = "you tug at the androids arm, but it reffuses to budge."
        }
+       else if(object == "spacesuit" && inventory.includes("spacesuit")==false){
+         output.innerHTML = "laboriously, you put on the suit over your engineer's uniform"
+         inventory.push("spacesuit")
+       }
+        else if(object == "spacesuit" && inventory.includes("spacesuit")){
+         output.innerHTML = "You are already wearing the spacesuit"
+       }
      }
 
      if(events[event] == "fix"){
        if(inventory.includes("battery")){
          output.innerHTML = "the android springs to life:<br><br>'Hello, I must say, I am terribly thankfull for your help!"
-         inventory.push("droid")
+         inventory.push("android")
        }
        else{
          output.innerHTML = "you try to fix him, but it's no use, he needs a new battery."
@@ -345,8 +362,9 @@
 
     class C1{
    constructor(){
-     this.objects = [["bridge","e","east"],["airlock","s","south"]]
-     this.descrip = "you are in 1st maintinace corridor, you are greeted by a chorus of bleep-bloops. The mantinace bot-9000 has just reactivated: 'DIEEEEEEEEE'. Oh dear, this one apears to be malfunctioning."
+     this.objects = [["bridge","e","east"],["airlock","s","south"],["droid","android","robot","maintinace"]]
+     this.descrip = "you are in 1st maintinace corridor, you spot a deactivated maintinace droid that looks as if it was half way through mending a large alien shaped hole in the wall....<br><br>The bridge is east<br><br>The Airlock is south."
+     this.droidEventTrigger = false
    }
    init(){
      output.innerHTML = this.descrip
@@ -354,9 +372,13 @@
      setSceneMesh(corridor1Mesh)
    }
    input(event,object){
+     
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+       }
+       if(object == "droid") {
+         
        }
      }
 
@@ -377,6 +399,9 @@
          output.innerHTML = "You can't go that way."
        }
      }
+   }
+   droidInteraction(){
+
    }
  }
 
@@ -479,7 +504,6 @@
      this.descrip = "you are in 1st engineering."
    }
    init(){
-     console.log("dfsfsfsfsf")
      output.innerHTML = this.descrip
      activeRoom = e1
    }
@@ -586,17 +610,23 @@
 
     class Airlock{
    constructor(){
-     this.objects = [["e1","engineering","s","south"],["c1","corridor","n","north"],["lounge","e","east"]]
-     this.descrip = "you are in the airlock."
+     this.objects = [["e1","engineering","s","south"],["c1","corridor","n","north"],["lounge","e","east"],["space","outer","outside","airlock","air","lock"]]
+     this.descrip = "you are in the airlock. There is one door leading to the cavernous expanse of space"
+     this.exitAttempts = 0
+     this.exitAttemptTexts = ["You dont have a space suit, if you go out there, you wont last more than 30 seconds.","You press your hand to the icy cold glass, the though of going out there unprotected fills you with dread.","This is your last warning....if you go out there YOU WILL DIE!"]
    }
    init(){
      output.innerHTML = this.descrip
+     output.innerHTML += "Outside there is nothing but the cold void of space, you think you can see home from here, but its fading, consumed by darkness..."
      activeRoom = airlock
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+       }
+       if(object == "space"){
+         output.innerHTML = "you gaze into the darkness of space, it fills you with a cold seeping dread."
        }
      }
 
@@ -616,6 +646,22 @@
        else if(object == "lounge"){
          lounge.init()
        }
+       else if(object == "space"){
+         if(inventory.includes("spacesuit")){
+           output.innerHTML = "Your spacewalk is succesfull, the communications dish is now functional."
+           comsDishFixed = true
+         }
+         else{
+          //  console.log("test")
+           if(this.exitAttempts < 3){
+            output.innerHTML = this.exitAttemptTexts[this.exitAttempts]
+            this.exitAttempts ++
+           }
+           else{
+             death()
+           }
+         }
+       }
        else{
          output.innerHTML = "You can't go that way."
        }
@@ -624,7 +670,8 @@
  }
 
 function death(){
-  // output.innerHTML = "you die"
+  output.innerHTML = "you die"
+  console.log("you die")
 }
 
 
@@ -645,5 +692,5 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = bridge
+activeRoom = airlock
 output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         

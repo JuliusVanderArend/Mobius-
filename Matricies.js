@@ -1,7 +1,4 @@
 mmultiply = function (arrA, arrB) {
-  // console.log(arrA)
-  // console.log("")
-  // console.log(arrB)
   if (arrA[0].length !== arrB.length) {
     throw new Error("Matrix mismatch");
   }
@@ -11,9 +8,6 @@ mmultiply = function (arrA, arrB) {
   for (var x = 0; x < arrA.length; x++) {
     result[x] = new Array(arrB[0].length);
   }
-  // console.log(arrB)
-  // console.log("")
-  // console.log(arrB_T)
   var arrB_T = mtranspose(arrB);
   for (var i = 0; i < result.length; i++) {
     for (var j = 0; j < result[i].length; j++) {
@@ -69,7 +63,6 @@ var rotateZ = function(point,angle){
     [[Math.sin(angle)],[Math.cos(angle)],[0]],
     [[0],[0],[1]]
   ]
-  // console.log(rotMatrix)
   return mmultiply(rotMatrix, point)
 }
 
@@ -79,7 +72,6 @@ var rotateX = function(point,angle){
     [0,Math.cos(angle),-Math.sin(angle)],
     [0,Math.sin(angle),Math.cos(angle)]
   ]
-  // console.log(rotMatrix)
   return mmultiply(rotMatrix, point)
 }
 

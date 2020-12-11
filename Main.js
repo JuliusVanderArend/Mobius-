@@ -50,32 +50,32 @@ function setSceneMesh(mesh){
 setup()
 renderFrame();
 document.addEventListener('keydown', function(event) {
-    if(event.key == "a") {
+    if(event.key == "a" && input.value == "") {
        gloabalOffset = [gloabalOffset[0]+moveSpeed,gloabalOffset[1],gloabalOffset[2]]
        clearCTX();
        renderFrame();
     }
-    if(event.key == "d") {
+    if(event.key == "d" && input.value == "") {
        gloabalOffset = [gloabalOffset[0]-moveSpeed,gloabalOffset[1],gloabalOffset[2]]
        clearCTX();
        renderFrame();
     }
-    if(event.key == "w") {
+    if(event.key == "w" && input.value == "") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1],gloabalOffset[2]+moveSpeed]
        clearCTX();
        renderFrame();
     }
-    if(event.key == "s") {
+    if(event.key == "s" && input.value == "") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1],gloabalOffset[2]-moveSpeed]
        clearCTX();
        renderFrame();
     }
-    if(event.key == "q") {
+    if(event.key == "q" && input.value == "") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1]+moveSpeed,gloabalOffset[2]]
        clearCTX();
        renderFrame();
     }
-    if(event.key == "e") {
+    if(event.key == "e" && input.value == "") {
        gloabalOffset = [gloabalOffset[0],gloabalOffset[1]-moveSpeed,gloabalOffset[2]]
        clearCTX();
        renderFrame();

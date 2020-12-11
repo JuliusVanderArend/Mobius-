@@ -29,7 +29,7 @@ function takeInput(){
       foundCMD == true;
     }
     else if(inp[z] == "help"){
-      output.innerHTML = "The objects in this room are: "+activeRoom.objects+". The comands you can perform are: "+ cmds
+      output.innerHTML = "The objects in this room are:<br><br> "+activeRoom.objects+"<br><br>. The comands you can perform are: "+ cmds
     }
   }
   for(var i = 0; i < cmds.length; i++){
@@ -72,4 +72,4 @@ function takeInput(){
   if(Math.random() < (movesTaken/200)+0.2){
     output.innerHTML += alienTexts[Math.floor(Math.random() * alienTexts.length)];
   }
-} 
+}    
