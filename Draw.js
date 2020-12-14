@@ -1,4 +1,6 @@
-	drawLine = function(pos1, pos2)
+	var lines = [":","::",":::","::::",":::::","::::::",":::::::"];
+  
+  drawLine = function(pos1, pos2)
 	{
 		var delta = pos2.map(function(value, index) { return value - pos1[index]; });
 		var increment = delta.map(Math.sign);
@@ -27,10 +29,18 @@
 	};
 
 var drawPix = function(size,x,y){
-  ctx.font = size+ "px Arial";
+  ctx.font = size + "px Arial";
+  // ctx.fillText(lines[Math.floor(Math.random() * lines.length)],x,y);
   ctx.fillText("::",x,y);
 }
 
 var clearCTX = function(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawStars(){
+  ctx.font = 7 + "px Arial";
+  for(var i = 0; i<100;i++){
+    ctx.fillText(".",Math.floor(canvas.width*Math.random()),Math.floor(canvas.height*Math.random()));
+  }
 }

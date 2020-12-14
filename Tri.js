@@ -41,7 +41,7 @@ class Tri{
     }
 
     for (var i = 0; i < pPoints.length; i++){
-      drawPix(25 * pPoints[i][2],pPoints[i][0]*scaleFactor+wid/2,pPoints[i][1]*scaleFactor+ (hig/2));
+      drawPix(3 * pPoints[i][2],pPoints[i][0]*scaleFactor+wid/2,pPoints[i][1]*scaleFactor+ (hig/2));
     }
   }
 

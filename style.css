@@ -13,4 +13,14 @@ p{
 
 #outText{
   color: white;
+  width: 1000px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+#inputText{
+  background-color:black;
+  color: white;
+  height: 30px;
+  width: 1000px;
+  font-family: "Lucida Console", Monaco, monospace;
 }

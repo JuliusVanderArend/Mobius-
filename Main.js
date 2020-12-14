@@ -31,7 +31,7 @@ var renderFrame = function(){
     // objects[i].rotateOBJX(0.02);
     // objects[i].rotateOBJZ(0.02);
     objects[i].renderOBJ();
-    
+    drawStars();
   }
 
   

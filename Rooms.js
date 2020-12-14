@@ -91,6 +91,7 @@
      this.failtexts = ["You launch off of the south wall and majestically drift through the lounge,....before unceremoniously smaking into a wall. It appears you have missed the door.","Once again you lauch twords the door, once again you bury your nose in the opposite wall.","You sail into the opposite wall nearly smaking into a deadly looking support gurdur, some gravity would be really nice right about now...."]
    }
    init(){
+     setSceneMesh(loungeMesh)
      if(this.hasGravity == false){
        output.innerHTML = this.descripNullG
      }
@@ -102,6 +103,7 @@
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
+         setSceneMesh(loungeMesh)
          if(this.hasGravity){
            output.innerHTML = this.descrip
          }
@@ -200,7 +202,7 @@
    class Quarters{
    constructor(){
      this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"],["pod","hypersleep","bed"],["ceiling","roof"]]
-     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines<br><br> the medbay is to your east<br><br> the lounge is north."
+     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines<br><br> the medbay is to your west<br><br> the lounge is north."
      this.magTaken = false
    }
    init(){
@@ -265,17 +267,36 @@
 
     class Coms{
    constructor(){
-     this.objects = [["e2","engineering","w","west"]]
-     this.descrip = "you are in communications."
+     this.objects = [["e2","engineering","w","west"],["console","control","pannel","communications","coms"]]
+     this.descrip = "you are in communications, hundreds of buttons and switches flash on and off, twinkling like lights on a christmas tree. In the center of this control pannel there is the main communications console, used for contacting other plannets and vessels.<br><br>If you want to escape this ship alive, you will need to contact help. "
    }
    init(){
      output.innerHTML = this.descrip
      activeRoom = coms
+     setSceneMesh(comsMesh)
    }
    input(event,object){
+     console.log(object)
+     console.log(events[event])
      if(events[event] == "look"){
        if(object == 111){
+         setSceneMesh(comsMesh)
          output.innerHTML = this.descrip
+       }
+       if(object == "console"){
+         output.innerHTML = "In order to use communications, the coms array must be functional and you must have power."
+         if(reactorFixed){
+           output.innerHTML +="<br><br> REACTOR STATUS: NOMINAL"
+         }
+         else{
+           output.innerHTML +="<br><br> REACTOR STATUS: INSUFFICIENT POWER"
+         }
+        if (comsDishFixed){
+          output.innerHTML +="<br><br> COMS ARRAY STATUS: NOMINAL"
+        }
+        else{
+          output.innerHTML +="<br><br> COMS ARRAY STATUS: NON FUNCTIONAL"
+        }
        }
      }
 
@@ -284,13 +305,30 @@
          output.innerHTML = "take what?"
        }
      }
-
+ 
      if(events[event] == "go"){
        if(object == "e2"){
          e2.init()
        }
        else{
          output.innerHTML = "You can't go that way."
+       }
+     }
+     if(events[event] == "use"){
+       if(object == "console"){
+         console.log("FUCKL UYESDFSDF")
+         if(reactorFixed && comsDishFixed == false){
+           output.innerHTML = "You need to fix the coms array to use communications."
+         }
+         else if(comsDishFixed && reactorFixed == false){
+           output.innerHTML = "You need to fix the reactor to use communications."
+         }
+         else if(comsDishFixed && reactorFixed){
+           win()
+         }
+         else{
+           output.innerHTML = "You need to fix the reactor and the coms array to use communications."
+         }
        }
      }
    }
@@ -305,11 +343,13 @@
      output.innerHTML = "As you palm the doctors ID on the scanner, the door to the medbay slides open."
      output.innerHTML += this.descrip
      activeRoom = medbay
+     setSceneMesh(medbayMesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+         setSceneMesh(medbayMesh)
        }
        else if(object == "droid"){
          output.innerHTML = "the android's sallow skin hangs loosly around his dead eyes. poor sod, probably locked himself in the medbay an ran out of power...<br><br>The android is wearing a space suit which appears to be in good condition, this could be usefull...."
@@ -362,32 +402,116 @@
 
     class C1{
    constructor(){
-     this.objects = [["bridge","e","east"],["airlock","s","south"],["droid","android","robot","maintinace"]]
+     this.objects = [["bridge","e","east"],["airlock","s","south"],["droid","android","robot","maintinace"],["shoot"],["key"],["attack"],["run"]]
      this.descrip = "you are in 1st maintinace corridor, you spot a deactivated maintinace droid that looks as if it was half way through mending a large alien shaped hole in the wall....<br><br>The bridge is east<br><br>The Airlock is south."
+     this.descripDroidDead = "you are in the 1st maintinace corridor... the electronic guts of a disembowled robot lie before you....<br><br>The bridge is east<br><br>The Airlock is south."
+     this.descripDroidAlive = "The maintinace droid is still here, and still very angry."
+     this.descripDroidPassified = "you are in the 1st maintinace corridor, the maintinace droid has scuttled away somewhere in the ship.<br><br>The bridge is east<br><br>The Airlock is south."
      this.droidEventTrigger = false
+     this.droidDead = false
+     this.droidPassified = false
+     this.activeObject = null
+     this.firstVisit = true
    }
     droidInteraction(){
+     console.log(this.activeObject)
+    //  console.log(inventory)
      output.innerHTML = "you have woken the maintinace droid from it's deep sleep<br><br>THREAT DETECTED...AUTOMATED DEFENCE PROCEDURE INTITIATED....PROVIDE SYSTEM KEY OR BE DISSASEMBLED IMEDIATLEY!<br><br> Oh dear, the droid appears to still be a bit...startled...<br><br>Your options are...."
+     output.innerHTML += "<br><br> Run away (RUN)"
+     output.innerHTML += "<br><br> Attack the droid (ATTACK)"
      if(inventory.includes("pistol")){
-       output.innerHTML+= "<br><br>shoot the droid"
+       output.innerHTML += "<br><br><span style='color: #d13d44'>shoot the droid with your pistol (SHOOT)</span>"
+     }
+     if(inventory.includes("key")){
+       output.innerHTML += "<br><br><span style='color: #9a25b8'>show the droid your system-key (KEY)</span>"
+     }
+     if(this.activeObject == "run"){
+       var rand = Math.random()
+       if(rand < 0.45){
+         activeRoom = bridge
+         output.innerHTML = "you scramble away to the bridge."
+       }
+       if(rand <= 0.95){
+         activeRoom = airlock
+         output.innerHTML = "you scramble away to the airlock."
+       }
+       if(rand > 0.95){
+         output.innerHTML = "you flee in terror, but to no avail, the droid eviscerates you with it's maintinace claw....."
+         death()
+       }
+     }
+     else if(this.activeObject == "attack"){
+       var rand = Math.random()
+       if(rand < 0.6){
+         output.innerHTML = "you charge the droid, clawing at it's metalic dome with your fingernails.... somehow by dumb luck, you manage to snag a signaling condit with your finger and pull it loose. The droid fizzles and pops before dieing for good.<br><br>You spot a reactor cell inside the droid's main compartment and put it in yout back pocket... this could be very usefull...."
+         inventory.push("reactor_cell")
+         this.droidEventTrigger = false
+         this.droidDead = true
+         this.activeObject = null
+       }
+       else{
+         output.innerHTML = "You claw at the droid's metalic dome, but to no effect.... the droid promply eviscerates you with its maintinace claw."
+         death()
+       }
+     }
+     else if(this.activeObject == "shoot"){
+       output.innerHTML = "Aiming squarely at the droids proccessing dome, you pull the trigger... with a tactile click, you blow a large hole through the droids head.<br><br>it fizzles and pops before collapsing into a mess of robot guts.<br><br>You spot a reactor cell inside the droid's main compartment and put it in yout back pocket... this could be very usefull...."
+       inventory.push("reactor_cell")
+       this.droidEventTrigger = false
+       this.droidDead = true
+       this.activeObject = null
+     }
+     else if(this.activeObject == "key"){
+       output.innerHTML = "you show the droid the system-key hanging around your neck.<br><br>SYSTEM-KEY DETECTED PLEASE INSERT.<br><br>approaching cautiously you insert the key into the droid's scanning receptical<br><br>KEY ACCEPTED...HOSTILITY LEVEL.RESET() HOSTILITY LEVEL LOWERING....<br><br> The droid chimes in an eleoquent british accent: 'ah, hello there human, how may I help you?...oh, it appears the ship's reactor is fried, I shall get right to fixing it.'<br><br> The reactor is now reppaired."
+       reactorFixed = true;
+       this.droidEventTrigger = false
+       this.activeObject = null
+       this.droidPassified = true
+       this.droidDead = true
      }
    }
    init(){
-     output.innerHTML = this.descrip
+     setSceneMesh(c1mesh)
+     if(this.droidDead == false && this.firstVisit){
+       output.innerHTML = this.descrip
+       this.firstVisit = false
+     }
+     else if(this.droidDead == false && this.droidEventTrigger == false && this.droidPassified == false){
+       output.innerHTML = this.descripDroidAlive
+     }
+     else if(this.droidPassified == true){
+       output.innerHTML = this.descripDroidPassified
+     }
+     else{
+       output.innerHTML = this.descripDroidDead
+     }
      activeRoom = c1
-     setSceneMesh(corridor1Mesh)
    }
    input(event,object){
-     if(this.droidEventTrigger){
-       console.log("droid interact")
-       this.droidInteraction()
+     if(this.droidEventTrigger && this.droidDead == false){
+      console.log("droid interact")
+      this.activeObject = object
+      this.droidInteraction()
      }
      else{
       if(events[event] == "look"){
         if(object == 111){
-          output.innerHTML = this.descrip
+          setSceneMesh(c1mesh)
+          if(this.droidDead == false && this.droidEventTrigger == false){
+            output.innerHTML = this.descrip
+            this.firstVisit = false
+          }
+          else if(this.droidDead == false && this.firstVisit == false && this.droidPassified == false){
+            output.innerHTML = this.descripDroidAlive
+          }
+          else if(this.droidPassified == true){
+            output.innerHTML = this.descripDroidPassified
+          }
+          else{
+            output.innerHTML = this.descripDroidDead
+          }
         }
-        if(object == "droid") {
+        if(object == "droid" && this.droidDead == false) {
           this.droidEventTrigger = true
           this.droidInteraction()
         }
@@ -422,10 +546,12 @@
    init(){
      output.innerHTML = this.descrip
      activeRoom = c2
+     setSceneMesh(c2Mesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
+         setSceneMesh(c2Mesh)
          output.innerHTML = this.descrip
        }
      }
@@ -461,6 +587,7 @@
    init(){
      output.innerHTML = this.descrip
      activeRoom = kitchen
+     setSceneMesh(kitchenMesh)
    }
    input(event,object){
      console.log(events[event])
@@ -468,13 +595,14 @@
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+         setSceneMesh(kitchenMesh)
        }
        else if(object == "body"){
-         output.innerHTML = "you tug on the pair of feet, and a grubby man wearing engineer's clothes flops to the floor. The mans face is covered in red, moldy lasagna-looking goop, a key inscribed 'robot controller-9000' is hung around his neck."
-         this.objects.push(["key","robot","controller","9000"])
+         output.innerHTML = "you tug on the pair of feet, and a grubby man wearing engineer's clothes flops to the floor. The mans face is covered in red, moldy lasagna-looking goop, a key inscribed 'maintinace-system-key' is hung around his neck."
+         this.objects.push(["key","system","maintinace"])
          console.log(this.objects)
        }
-       else if(object == "key"){
+       if(object == "key"){
          output.innerHTML = "the key is roughly cut and etched with tally marks, you wonder what this means."
       }
      }
@@ -515,11 +643,13 @@
    init(){
      output.innerHTML = this.descrip
      activeRoom = e1
+     setSceneMesh(eMesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+          setSceneMesh(eMesh)
        }
      }
 
@@ -554,11 +684,13 @@
    init(){
      output.innerHTML = this.descrip
      activeRoom = e2
+      setSceneMesh(eMesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+          setSceneMesh(eMesh)
        }
      }
 
@@ -585,24 +717,48 @@
 
     class Reactor{
    constructor(){
-     this.objects = [["e1","engineering","w","west"]]
-     this.descrip = "you are in the reactor."
+     this.objects = [["e1","engineering","w","west"],["core","reactor"]]
+     this.descrip = "you are in the reactor, the reactor core sputters and flickers dimmly as if fighting to stay alive...the power output reads 12 Kw, nowhere near enough to power the comms array.<br><br> The reactor core will need to be fixed inorder to contact help.<br><br>First engineering is west."
+     this.descripReacFixed = "you are in the reactor, it now appears to be functional, you are comforted by it's warm glow.<br><br>First engineering is west"
    }
    init(){
-     output.innerHTML = this.descrip
+      if(reactorFixed){
+           output.innerHTML = this.descripReacFixed
+         }
+         else{
+            output.innerHTML = this.descrip
+         }
      activeRoom = reactor
+     setSceneMesh(reactorMesh)
    }
    input(event,object){
      console.log(events[event]+object)
      if(events[event] == "look"){
        if(object == 111){
-         output.innerHTML = this.descrip
+         setSceneMesh(reactorMesh)
+         if(reactorFixed){
+           output.innerHTML = this.descripReacFixed
+         }
+         else{
+          output.innerHTML = this.descrip
+         }
+       }
+       if(object == "core"){
+         if(reactorFixed){
+           output.innerHTML = "You oppen the maintinace hatch... The reactor core is functioning properly."
+         }
+         else{
+          output.innerHTML = "Uppon opening the maintinace hatch, you discover that the reactor is running on fumes!<br><br>There is almost no fuel left...it's like the reactor has been running for deccades. It will require a new reactor cell to be functional."
+         }
        }
      }
 
      if(events[event] == "take"){
        if(object == 111){
          output.innerHTML = "take what?"
+       }
+       if(object == "core"){
+         output.innerHTML = "the reactor core is bolted down and refuses to move...it also weighs 20 tons"
        }
      }
 
@@ -612,6 +768,20 @@
        }
        else{
          output.innerHTML = "You can't go that way."
+       }
+     }
+     if(events[event] == "fix"){
+       if(reactorFixed){
+         output.innerHTML = "You already fixed the reactor."
+       }
+       else{
+        if(inventory.includes("reactor_cell")){
+          output.innerHTML = "Carefully, you insert the reactor cell into the containment chamber<br><br>The core brightens and begins to hum in a rhythmic manner, power output jumps to 2000 kW, this should be sufficient to use the coms array."
+          reactorFixed = true;
+        }
+        else{
+          output.innerHTML = "you tinker with the reactor core, but it is no use, you will not be able to get anywhere near enought power out of it without a replacement reactor cell.<br><br>You must look for a reactor cell."
+        }
        }
      }
    }
@@ -628,15 +798,18 @@
      output.innerHTML = this.descrip
      output.innerHTML += "Outside there is nothing but the cold void of space, you think you can see home from here, but its fading, consumed by darkness..."
      activeRoom = airlock
+     setSceneMesh(airlockMesh)
    }
    input(event,object){
      if(events[event] == "look"){
        if(object == 111){
          output.innerHTML = this.descrip
+         setSceneMesh(airlockMesh)
        }
        if(object == "space"){
          output.innerHTML = "you gaze into the darkness of space, it fills you with a cold seeping dread."
        }
+       
      }
 
      if(events[event] == "take"){
@@ -661,7 +834,6 @@
            comsDishFixed = true
          }
          else{
-          //  console.log("test")
            if(this.exitAttempts < 3){
             output.innerHTML = this.exitAttemptTexts[this.exitAttempts]
             this.exitAttempts ++
@@ -675,6 +847,11 @@
          output.innerHTML = "You can't go that way."
        }
      }
+     else if(events[event] == "use"){
+       if (object == ""){
+
+       }
+     }
    }
  }
 
@@ -683,6 +860,10 @@ function death(){
   console.log("you die")
 }
 
+function win(){
+  output.innerHTML = "YOU WIN"
+  console.log("YOU WIN")
+}
 
 
 
@@ -701,5 +882,5 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = c1
+activeRoom = c2
 output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         

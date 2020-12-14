@@ -15,3 +15,4 @@ const moveSpeed = 0.4;
 var inventory = [];
 var movesTaken = 0;
 var comsDishFixed = false;
+var reactorFixed = false;
