@@ -14,6 +14,7 @@ class Tri{
     this.v01 = v1;
     this.v02 = v2;
     this.v03 = v3;
+    this.screenSpace = [0,0]
   }
 
   render(){
@@ -27,6 +28,7 @@ class Tri{
     var p0 = [pPoints[0][0]*scaleFactor/resolution,pPoints[0][1]*scaleFactor/resolution]
     var p1 = [pPoints[1][0]*scaleFactor/resolution,pPoints[1][1]*scaleFactor/resolution]
     var p2 = [pPoints[2][0]*scaleFactor/resolution,pPoints[2][1]*scaleFactor/resolution]
+    this.screenSpace = p0
     var points =  drawLine(p0,p1);
     for(var i = 0; i < (points.length); i++){
       drawPix(pixSize,points[i][0]*resolution+(wid/2),points[i][1]*resolution+ (hig/2));

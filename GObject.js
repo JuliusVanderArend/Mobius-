@@ -9,7 +9,7 @@ class GObject{
     var triLen = this.tris.length;
     for(var i =0; i < triLen; i++){
       this.tris[i].offset= vAdd(gloabalOffset, this.pos);
-      this.tris[i].render();
+      this.tris[i].render();12
     }
   }
 

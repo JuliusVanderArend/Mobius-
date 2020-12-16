@@ -8,24 +8,36 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   </head>
   <body>
-    <div class="w3-padding">
-      <canvas id="myCanvas" width="1000" height="700"
-      style="border:1px solid #d3d3d3;" class="w3-round-large">
+    <div class = "w3-row">
+      <div class="w3-padding s6 w3-col">
+        <canvas id="myCanvas" width="700" height="500"
+        style="border:1px solid #d3d3d3;" class="w3-round-large" onclick="canvasActive()">
+      </div>
+      <div class="w3-padding s3 w3-col">
+        <canvas id="myMap" width="500" height="500"
+        style="border:1px solid #d3d3d3;" class="w3-round-large" onclick="mapActiveFunc()">
+        <p style="text-align:right">You are stranded aboard the USC Mobius after decades of hypersleep, You must find a way to contact help and escape.</p>
+      </div>
     </div>
     <div class="w3-padding">
-      <p id="outText" item-width="1000px">hello world</p>
+      <p id="outText" item-width="1200px">hello world</p>
     </div>
     <div class="w3-padding">
-      <input id="inputText" class="w3-border w3-round-large " width="1000px">enter input</input>
+      <input id="inputText" class="w3-border w3-round-large " width="1232px" onclick="inputActive()">enter input</input>
     </div>
+    <!-- <div class="w3-row">
+      <div class="s6 w3-green w3-center"><canvas id="myMap" width="1000" height="700"
+        style="border:1px solid #d3d3d3;" class="w3-round-large"></div>
+      <div class="w3-col s6 w3-dark-grey w3-center"><p>s6</p></div>
+    </div> -->
+    <script src="Mesh.js"></script>
+    <script src="GObject.js"></script>
     <script src="GlobalState.js"></script>
     <script src="Matricies.js"></script>
-    <script src="Draw.js"></script>
     <script src="Tri.js"></script>
-    <script src="GObject.js"></script>
+    <script src="Draw.js"></script>
     <script src="Parser.js"></script>   
     <script src="Rooms.js"></script>
-    <script src="Mesh.js"></script>
     <script src="Main.js"></script>
   </body>
 </html5

@@ -4,14 +4,15 @@ var cmds = [
   ["damage","attack","destroy","kill"],
   ["go"],
   ["fix","repair","mend"],
-  ["use","press","push"]
+  ["use","press","push"],
+  ["help"]
 ]
 
 var alienTexts = ["<br><br>.....you hear a rumbling deep within the hull of this ship.. what could it be?","<br><br>.....An alein, metalic screach echoes through the room.","<br><br>You here a blunt thump from somewhere in the ship.... must just be your imagination."]
 
 var moveVerbs = ["n","e","s","w","north","east","south","west","lounge","medbay"];
 // var iObjects = ["apple","chair","lamp","testOBJ","fuel","pipes","n","s","e","w"];
-var events = ["take","look","attack","go","fix","use"];
+var events = ["take","look","attack","go","fix","use","help"];
 
 function takeInput(){
   console.log(activeRoom);
@@ -30,12 +31,15 @@ function takeInput(){
       foundCMD == true;
     }
     else if(inp[z] == "help"){
-      output.innerHTML = "The objects in this room are:<br><br> "+activeRoom.objects+"<br><br>. The comands you can perform are: "+ cmds
+      output.innerHTML = "The objects in this room are: <br><br> "+activeRoom.objects+"<br><br>. The comands you can perform are" + moveVerbs +"<br><br>" + activeRoom.helpText
     }
   }
   for(var i = 0; i < cmds.length; i++){
     for(var j = 0; j < cmds[i].length; j++){
       for(var f = 0; f < inp.length; f++){
+        if(inp[f] == "start"){
+          gameStart = true
+        }
         if (cmds[0][j] == inp[f] && foundCMD ==false){
           eventType = 0;
           foundCMD = true;
@@ -73,8 +77,10 @@ function takeInput(){
       }
     }
   }
-  activeRoom.input(eventType, parsedObject);
-  if(Math.random() < (movesTaken/200)+0.2){
-    output.innerHTML += alienTexts[Math.floor(Math.random() * alienTexts.length)];
+  if(amDead == false){
+    activeRoom.input(eventType, parsedObject);
+    if(Math.random() < (movesTaken/200)+0.2){
+      output.innerHTML += alienTexts[Math.floor(Math.random() * alienTexts.length)];
+    }
   }
 }    

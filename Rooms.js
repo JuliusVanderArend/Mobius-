@@ -1,10 +1,12 @@
- 
+
  var activeRoom = null;
  
+
  class Bridge{
    constructor(){
+     this.helpText = "Try looking at the body, it might reveal something useful, also that ID might get you into the medbay."
      this.objects = [["id","card"],["body","corpse","man"],["lounge","s","south"],["c1","corridor","west","w"], ["console","consoles","pc","computer"]]
-     this.descrip = "you are in the bridge, you spot a body clad in a white labcoat strewn accross the floor. An id card lies across a control pannel with some consoles nearby."
+     this.descrip = "you are in the bridge, you spot a body clad in a white lab coat strewn across the floor. An id card lies across a control panel with some consoles nearby."
    }
    init(){
      output.innerHTML = this.descrip
@@ -18,23 +20,23 @@
          output.innerHTML = this.descrip
        }
        else if(object == "id"){
-         output.innerHTML = "this is an id card, it may be usefull for opening some doors...."
+         output.innerHTML = "this is an id card, it may be useful for opening some doors...."
        }
        else if(object == "body"){
-         output.innerHTML = "you turn over the body to reveal a pistol grasped in the mans hand."
+         output.innerHTML = "you turn over the body to reveal a pistol grasped in the man’s hand."
          this.objects.push(["pistol","gun","weapon"])
        }
        else if(object == "pistol"){
-         output.innerHTML = "it apears to be an older model with 2 rounds left in the magazine, the grip is inscribed 'Weyland-Yutani'."
+         output.innerHTML = "it appears to be an older model with 2 rounds left in the magazine, the grip is inscribed 'Weyland-Yutani'."
        }
        else if(object == "console"){
          output.innerHTML = "you power up the console, the screen flickers to life displaying the last entry...."
          clearCTX()
-         ctx.font = "11px monospace";
-         ctx.fillText("// INITIALIZING..LOADING ROM..CHEKCING PERIFERALS...321...ACTIVATE//",10,10)
-         ctx.fillText("//CAPTAINS LOG: status: desperate, food suplies are low....",10,30)
-         ctx.fillText("life signs: fading.. we wont last much longDFSAAAAAAAAA42314HHHH//",10,50)
-         ctx.fillText("//END MESSAGE//",10,70)
+         ctx.font = "16px monospace";
+         ctx.fillText("// INITIALIZING..LOADING ROM..CHEKCING PERIFERALS...321...ACTIVATE//",20,20)
+         ctx.fillText("//CAPTAINS LOG: status: desperate, food supplies are low....",20,50)
+         ctx.fillText("life signs: fading.. we won’t last much longDFSAAAAAAAAA42314HHHH//",20,80)
+         ctx.fillText("//END MESSAGE//",20,120)
        }
      }
 
@@ -83,12 +85,13 @@
 
  class Lounge{
    constructor(){
+     this.helpText = "You need to fix the gravity generator to progress, try typing 'fix gravity'."
      this.objects = [["quarters","sleeping","s","south"],["kitchen","e","east"],["airlock","w","west"],["bridge","n","north"],["gfg","gravitational","feild","generator","gravity"],["coffee","cup"]]
-     this.descripNullG = "You take your first step into the lounge.....and go flying into the ceiling? it appears the gravitational feild generator (GFG) is busted, a cup of coffee hangs limply in the abbys before you. How did this place fall into such disrepair?..... it was fine yesterday...."
-     this.descrip = "You are in the Lounge, normally this place is full of crewmembers engaged in various receational activities, but it is rather dead now... <br><br>the kitchen is east<br><br> the bridge is north<br><br> the airlock is west<br><br> the sleeping quarters are south."
+     this.descripNullG = "You take your first step into the lounge.....and go flying into the ceiling? it appears the gravitational field generator (GFG) is busted, a cup of coffee hangs limply in the abyss before you. How did this place fall into such disrepair?..... it was fine yesterday...."
+     this.descrip = "You are in the Lounge, normally this place is full of crewmembers engaged in various recreational activities, but it is rather dead now... <br><br>the kitchen is east<br><br> the bridge is north<br><br> the airlock is west<br><br> the sleeping quarters are south."
      this.hasGravity = false
      this.launchTrys = 0;
-     this.failtexts = ["You launch off of the south wall and majestically drift through the lounge,....before unceremoniously smaking into a wall. It appears you have missed the door.","Once again you lauch twords the door, once again you bury your nose in the opposite wall.","You sail into the opposite wall nearly smaking into a deadly looking support gurdur, some gravity would be really nice right about now...."]
+     this.failtexts = ["You launch off of the south wall and majestically drift through the lounge,....before unceremoniously smacking into a wall. It appears you have missed the door.","Once again you launch towards the door, once again you bury your nose in the opposite wall.","You sail into the opposite wall nearly smacking into a deadly looking support girder, some gravity would be really nice right about now...."]
    }
    init(){
      setSceneMesh(loungeMesh)
@@ -117,11 +120,11 @@
           output.innerHTML = "Something has eaten through the power conduit that supplies the GFG, it should be a simple fix being the experienced engineer you are."
          }
          else{
-           output.innerHTML = "The feild generator hums calmly, indifferent to your existance."
+           output.innerHTML = "The field generator hums calmly, indifferent to your existence."
          }
        }
        else if(object == "coffee"){
-         output.innerHTML = "the coffee floats by, ignoring you completly"
+         output.innerHTML = "the coffee floats by, ignoring you completely"
        }
      }
 
@@ -141,7 +144,7 @@
        else if(object == "kitchen"){
          if(this.hasGravity == false){
            if(this.launchTrys > 2){
-             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable, you crash into steel reinforcement girder, your neck snaps and you promptly die..."
              death()
            }
            else{
@@ -157,7 +160,7 @@
        else if(object == "airlock"){
          if(this.hasGravity == false){
            if(this.launchTrys > 2){
-             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable, you crash into steel reinforcement girder, your neck snaps and you promptly die..."
              death()
            }
            else{
@@ -172,7 +175,7 @@
        else if(object == "bridge"){
          if(this.hasGravity == false){
            if(this.launchTrys > 2){
-             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable,you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
+             output.innerHTML = "It seems your previous attempts have not made the wall any more permeable, you crash into steel reinforcement gurder, your neck snaps and you promptly die..."
              death()
            }
            else{
@@ -190,7 +193,7 @@
      }
      if(events[event] == "fix"){
        if(object == "gfg"){
-         output.innerHTML = "With a warm glow and thick electric hum, the feild generator comes to life, you feel good to be back on solid ground."
+         output.innerHTML = "With a warm glow and thick electric hum, the field generator comes to life, you feel good to be back on solid ground."
          this.hasGravity = true
        }
      }
@@ -201,8 +204,9 @@
  
    class Quarters{
    constructor(){
+     this.helpText = "Try some basic commands like: 'look magazine' or 'go lounge'"
      this.objects = [["lounge","n","north"],["medbay","w","west"],["mag","magazine","magazines"],["pod","hypersleep","bed"],["ceiling","roof"]]
-     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hypersleep pod there are some tattered magazines<br><br> the medbay is to your west<br><br> the lounge is north."
+     this.descrip = "you are in the sleeping quarters, most mornings this place is bustling with sleepy crewmen, but today its empty, dust spills from the ceiling as the ship's hull creaks, this place looks like it's aged 50 years overnight. by the adjacent hyper sleep pod there are some tattered magazines<br><br> the medbay is to your west<br><br> the lounge is north."
      this.magTaken = false
    }
    init(){
@@ -227,7 +231,7 @@
          output.innerHTML = "the pod is constructed of a brushed metal base with a sleeping compartment inside, above the pod there is a petal-shaped glass lid."
        }
        else if(object == "ceiling"){
-         output.innerHTML = "spidercracks run accross the delapidated ceiling, the text: 'HELP ME!' is carved into the metal, strange........"
+         output.innerHTML = "spidercracks run across the dilapidated ceiling, the text: 'HELP ME!' is carved into the metal, strange........"
        }
      }
 
@@ -236,7 +240,7 @@
          output.innerHTML = "take what?"
        }
        else if(object == "mag" && this.magTaken==false){
-         output.innerHTML = "as you pick up the magazine, it disintigrates into dust."
+         output.innerHTML = "as you pick up the magazine, it disintegrates into dust."
          this.magTaken = true
        }
        else if(object == "mag" && this.magTaken==true){
@@ -267,8 +271,9 @@
 
     class Coms{
    constructor(){
+     this.helpText = "try 'look coms' to see the status of coms or 'use coms' to contact help and win the game"
      this.objects = [["e2","engineering","w","west"],["console","control","pannel","communications","coms"]]
-     this.descrip = "you are in communications, hundreds of buttons and switches flash on and off, twinkling like lights on a christmas tree. In the center of this control pannel there is the main communications console, used for contacting other plannets and vessels.<br><br>If you want to escape this ship alive, you will need to contact help. "
+     this.descrip = "you are in communications, hundreds of buttons and switches flash on and off, twinkling like lights on a Christmas tree. In the center of this control pannel there is the main communications console, used for contacting other planets and vessels.<br><br>If you want to escape this ship alive, you will need to contact help. "
    }
    init(){
      output.innerHTML = this.descrip
@@ -336,8 +341,9 @@
 
     class Medbay{
    constructor(){
+     this.helpText = "good on you for finding your way in here, look at the android and take his suit."
      this.objects = [["quarters","sleeping","e","east"],["c2","corridor","w","west"],["droid","android","robot","body"]]
-     this.descrip = "You are in the medbay, this appears to be the only part of the ship protected from decay. The walls still have a bright sterile gleam. Unfourtunatley this has not done much for the inhabitants of this room...A dead android is slumped over a console. <br><br>the sleeping quarters are east<br><br>the second maintinace corridor is west."
+     this.descrip = "You are in the medbay, this appears to be the only part of the ship protected from decay. The walls still have a bright sterile gleam. Unfortunately this has not done much for the inhabitants of this room...A dead android is slumped over a console. <br><br>the sleeping quarters are east<br><br>the second maintenance corridor is west."
    }
    init(){
      output.innerHTML = "As you palm the doctors ID on the scanner, the door to the medbay slides open."
@@ -352,11 +358,11 @@
          setSceneMesh(medbayMesh)
        }
        else if(object == "droid"){
-         output.innerHTML = "the android's sallow skin hangs loosly around his dead eyes. poor sod, probably locked himself in the medbay an ran out of power...<br><br>The android is wearing a space suit which appears to be in good condition, this could be usefull...."
+         output.innerHTML = "the android's sallow skin hangs loosely around his dead eyes. poor sod, probably locked himself in the medbay and ran out of power...<br><br>The android is wearing a space suit which appears to be in good condition, this could be useful...."
          this.objects.push(["spacesuit","space","suit"])
        }
        else if(object == "spacesuit"){
-         output.innerHTML ="The suit is sleek white in colour and thickly padded<br><br>This should allow you to survive the cold void of space... could be pretty usefull"
+         output.innerHTML ="The suit is sleek white in colour and thickly padded<br><br>This should allow you to survive the cold void of space... could be pretty useful"
        }
      }
 
@@ -365,7 +371,7 @@
          output.innerHTML = "take what?"
        }
        else if(object == "droid"){
-         output.innerHTML = "you tug at the androids arm, but it reffuses to budge."
+         output.innerHTML = "you tug at the androids arm, but it refuses to budge."
        }
        else if(object == "spacesuit" && inventory.includes("spacesuit")==false){
          output.innerHTML = "laboriously, you put on the suit over your engineer's uniform"
@@ -378,7 +384,7 @@
 
      if(events[event] == "fix"){
        if(inventory.includes("battery")){
-         output.innerHTML = "the android springs to life:<br><br>'Hello, I must say, I am terribly thankfull for your help!"
+         output.innerHTML = "the android springs to life:<br><br>'Hello, I must say, I am terribly thankful for your help!"
          inventory.push("android")
        }
        else{
@@ -402,11 +408,12 @@
 
     class C1{
    constructor(){
-     this.objects = [["bridge","e","east"],["airlock","s","south"],["droid","android","robot","maintinace"],["shoot"],["key"],["attack"],["run"]]
-     this.descrip = "you are in 1st maintinace corridor, you spot a deactivated maintinace droid that looks as if it was half way through mending a large alien shaped hole in the wall....<br><br>The bridge is east<br><br>The Airlock is south."
-     this.descripDroidDead = "you are in the 1st maintinace corridor... the electronic guts of a disembowled robot lie before you....<br><br>The bridge is east<br><br>The Airlock is south."
-     this.descripDroidAlive = "The maintinace droid is still here, and still very angry."
-     this.descripDroidPassified = "you are in the 1st maintinace corridor, the maintinace droid has scuttled away somewhere in the ship.<br><br>The bridge is east<br><br>The Airlock is south."
+     this.helpText = "Try looking at the droid with 'look droid'"
+     this.objects = [["bridge","e","east"],["airlock","s","south"],["droid","android","robot"," maintenance "],["shoot"],["key"],["attack"],["run"]]
+     this.descrip = "you are in 1st maintenance corridor, you spot a deactivated maintenance droid that looks as if it was half way through mending a large alien shaped hole in the wall....<br><br>The bridge is east<br><br>The Airlock is south."
+     this.descripDroidDead = "you are in the 1st maintenance corridor... the electronic guts of a disembowelled robot lie before you....<br><br>The bridge is east<br><br>The Airlock is south."
+     this.descripDroidAlive = "The maintenance droid is still here, and still very angry."
+     this.descripDroidPassified = "you are in the 1st maintenance corridor, the maintenance droid has scuttled away somewhere in the ship.<br><br>The bridge is east<br><br>The Airlock is south."
      this.droidEventTrigger = false
      this.droidDead = false
      this.droidPassified = false
@@ -416,7 +423,7 @@
     droidInteraction(){
      console.log(this.activeObject)
     //  console.log(inventory)
-     output.innerHTML = "you have woken the maintinace droid from it's deep sleep<br><br>THREAT DETECTED...AUTOMATED DEFENCE PROCEDURE INTITIATED....PROVIDE SYSTEM KEY OR BE DISSASEMBLED IMEDIATLEY!<br><br> Oh dear, the droid appears to still be a bit...startled...<br><br>Your options are...."
+     output.innerHTML = "you have woken the maintenance droid from it's deep sleep<br><br>THREAT DETECTED...AUTOMATED DEFENCE PROCEDURE INTITIATED....PROVIDE SYSTEM KEY OR BE DISSASEMBLED IMEDIATLEY!<br><br> Oh dear, the droid appears to still be a bit...startled...<br><br>Your options are...."
      output.innerHTML += "<br><br> Run away (RUN)"
      output.innerHTML += "<br><br> Attack the droid (ATTACK)"
      if(inventory.includes("pistol")){
@@ -436,33 +443,33 @@
          output.innerHTML = "you scramble away to the airlock."
        }
        if(rand > 0.95){
-         output.innerHTML = "you flee in terror, but to no avail, the droid eviscerates you with it's maintinace claw....."
+         output.innerHTML = "you flee in terror, but to no avail, the droid eviscerates you with its maintenance claw....."
          death()
        }
      }
      else if(this.activeObject == "attack"){
        var rand = Math.random()
        if(rand < 0.6){
-         output.innerHTML = "you charge the droid, clawing at it's metalic dome with your fingernails.... somehow by dumb luck, you manage to snag a signaling condit with your finger and pull it loose. The droid fizzles and pops before dieing for good.<br><br>You spot a reactor cell inside the droid's main compartment and put it in yout back pocket... this could be very usefull...."
+         output.innerHTML = "you charge the droid, clawing at it's metallic dome with your fingernails.... somehow by dumb luck, you manage to snag a signalling Condit with your finger and pull it loose. The droid fizzles and pops before dying for good.<br><br>You spot a reactor cell inside the droid's main compartment and put it in your back pocket... this could be very useful...."
          inventory.push("reactor_cell")
          this.droidEventTrigger = false
          this.droidDead = true
          this.activeObject = null
        }
        else{
-         output.innerHTML = "You claw at the droid's metalic dome, but to no effect.... the droid promply eviscerates you with its maintinace claw."
+         output.innerHTML = "You claw at the droid's metallic dome, but to no effect.... the droid promptly eviscerates you with its maintenance claw."
          death()
        }
      }
      else if(this.activeObject == "shoot"){
-       output.innerHTML = "Aiming squarely at the droids proccessing dome, you pull the trigger... with a tactile click, you blow a large hole through the droids head.<br><br>it fizzles and pops before collapsing into a mess of robot guts.<br><br>You spot a reactor cell inside the droid's main compartment and put it in yout back pocket... this could be very usefull...."
+       output.innerHTML = "Aiming squarely at the droids processing dome, you pull the trigger... with a tactile click, you blow a large hole through the droids head.<br><br>it fizzles and pops before collapsing into a mess of robot guts.<br><br>You spot a reactor cell inside the droid's main compartment and put it in yout back pocket... this could be very usefull...."
        inventory.push("reactor_cell")
        this.droidEventTrigger = false
        this.droidDead = true
        this.activeObject = null
      }
      else if(this.activeObject == "key"){
-       output.innerHTML = "you show the droid the system-key hanging around your neck.<br><br>SYSTEM-KEY DETECTED PLEASE INSERT.<br><br>approaching cautiously you insert the key into the droid's scanning receptical<br><br>KEY ACCEPTED...HOSTILITY LEVEL.RESET() HOSTILITY LEVEL LOWERING....<br><br> The droid chimes in an eleoquent british accent: 'ah, hello there human, how may I help you?...oh, it appears the ship's reactor is fried, I shall get right to fixing it.'<br><br> The reactor is now reppaired."
+       output.innerHTML = "you show the droid the system-key hanging around your neck.<br><br>SYSTEM-KEY DETECTED PLEASE INSERT.<br><br>approaching cautiously you insert the key into the droid's scanning receptacle<br><br>KEY ACCEPTED...HOSTILITY LEVEL.RESET() HOSTILITY LEVEL LOWERING....<br><br> The droid chimes in an eloquent British accent: 'ah, hello there human, how may I help you?...oh, it appears the ship's reactor is fried, I shall get right to fixing it.'<br><br> The reactor is now repaired."
        reactorFixed = true;
        this.droidEventTrigger = false
        this.activeObject = null
@@ -540,8 +547,9 @@
 
     class C2{
    constructor(){
+     this.helpText = "This is an empty room"
      this.objects = [["medbay","e","east"],["e2","engineering","s","south"],["e1","n","north"]]
-     this.descrip = "you are in the 2nd maintinace corridor."
+     this.descrip = "you are in the 2nd maintenance corridor."
    }
    init(){
      output.innerHTML = this.descrip
@@ -581,8 +589,9 @@
 
     class Kitchen{
    constructor(){
+     this.helpText = "try typing 'look body'"
      this.objects = [["lounge","w","west"],["body","feet","man","corpse"]]
-     this.descrip = "you enter the kitchen, and are greeted by absolute stench. 50 year old space-lasagna dosent smell too good aparently. in the corner you see a pair of feet dangling out of a loose mantinace shaft."
+     this.descrip = "you enter the kitchen, and are greeted by absolute stench. 50 year old space-lasagne doesn’t smell too good apparently. in the corner you see a pair of feet dangling out of a loose maintenance shaft."
    }
    init(){
      output.innerHTML = this.descrip
@@ -598,8 +607,8 @@
          setSceneMesh(kitchenMesh)
        }
        else if(object == "body"){
-         output.innerHTML = "you tug on the pair of feet, and a grubby man wearing engineer's clothes flops to the floor. The mans face is covered in red, moldy lasagna-looking goop, a key inscribed 'maintinace-system-key' is hung around his neck."
-         this.objects.push(["key","system","maintinace"])
+         output.innerHTML = "you tug on the pair of feet, and a grubby man wearing engineer's clothes flops to the floor. The mans face is covered in red, moldy lasagna-looking goop, a key inscribed 'maintenance-system-key' is hung around his neck."
+         this.objects.push(["key","system"," maintenance "])
          console.log(this.objects)
        }
        if(object == "key"){
@@ -637,6 +646,7 @@
 
     class E1{
    constructor(){
+     this.helpText ="|This is an empty room."
      this.objects = [["reactor","e","east"],["c2","corridor","s","south"],["airlock","n","north"]]
      this.descrip = "you are in 1st engineering."
    }
@@ -678,6 +688,7 @@
 
     class E2{
    constructor(){
+     this.helpText = "This is an empty room"
      this.objects = [["c2","corridor","n","north"],["coms","communications","e","east"]]
      this.descrip = "you are in 2nd engineering."
    }
@@ -717,8 +728,9 @@
 
     class Reactor{
    constructor(){
+     this.helpText = "You need a power core to fix the reactor type 'fix reactor' to fix the reactor HINT: look in the first maintenance corridor for the power core."
      this.objects = [["e1","engineering","w","west"],["core","reactor"]]
-     this.descrip = "you are in the reactor, the reactor core sputters and flickers dimmly as if fighting to stay alive...the power output reads 12 Kw, nowhere near enough to power the comms array.<br><br> The reactor core will need to be fixed inorder to contact help.<br><br>First engineering is west."
+     this.descrip = "you are in the reactor, the reactor core sputters and flickers dimly as if fighting to stay alive...the power output reads 12 Kw, nowhere near enough to power the comms array.<br><br> The reactor core will need to be fixed in order to contact help.<br><br>First engineering is west."
      this.descripReacFixed = "you are in the reactor, it now appears to be functional, you are comforted by it's warm glow.<br><br>First engineering is west"
    }
    init(){
@@ -745,10 +757,10 @@
        }
        if(object == "core"){
          if(reactorFixed){
-           output.innerHTML = "You oppen the maintinace hatch... The reactor core is functioning properly."
+           output.innerHTML = "You open the maintenance hatch... The reactor core is functioning properly."
          }
          else{
-          output.innerHTML = "Uppon opening the maintinace hatch, you discover that the reactor is running on fumes!<br><br>There is almost no fuel left...it's like the reactor has been running for deccades. It will require a new reactor cell to be functional."
+          output.innerHTML = "Upon opening the maintenance hatch, you discover that the reactor is running on fumes!<br><br>There is almost no fuel left...it's like the reactor has been running for decades. It will require a new reactor cell to be functional."
          }
        }
      }
@@ -780,7 +792,7 @@
           reactorFixed = true;
         }
         else{
-          output.innerHTML = "you tinker with the reactor core, but it is no use, you will not be able to get anywhere near enought power out of it without a replacement reactor cell.<br><br>You must look for a reactor cell."
+          output.innerHTML = "you tinker with the reactor core, but it is no use, you will not be able to get anywhere near enough power out of it without a replacement reactor cell.<br><br>You must look for a reactor cell."
         }
        }
      }
@@ -789,14 +801,15 @@
 
     class Airlock{
    constructor(){
+     this.helpText = "You need to type: 'go airlock' to use the airlock, but you must have a spacesuit HINT: look in the medbay."
      this.objects = [["e1","engineering","s","south"],["c1","corridor","n","north"],["lounge","e","east"],["space","outer","outside","airlock","air","lock"]]
      this.descrip = "you are in the airlock. There is one door leading to the cavernous expanse of space"
      this.exitAttempts = 0
-     this.exitAttemptTexts = ["You dont have a space suit, if you go out there, you wont last more than 30 seconds.","You press your hand to the icy cold glass, the though of going out there unprotected fills you with dread.","This is your last warning....if you go out there YOU WILL DIE!"]
+     this.exitAttemptTexts = ["You don’t have a space suit, if you go out there, you wont last more than 30 seconds.","You press your hand to the icy cold glass, the though of going out there unprotected fills you with dread.","This is your last warning....if you go out there YOU WILL DIE!"]
    }
    init(){
      output.innerHTML = this.descrip
-     output.innerHTML += "Outside there is nothing but the cold void of space, you think you can see home from here, but its fading, consumed by darkness..."
+     output.innerHTML += " Outside there is nothing but the cold void of space, you think you can see home from here, but its fading, consumed by darkness..."
      activeRoom = airlock
      setSceneMesh(airlockMesh)
    }
@@ -830,7 +843,7 @@
        }
        else if(object == "space"){
          if(inventory.includes("spacesuit")){
-           output.innerHTML = "Your spacewalk is succesfull, the communications dish is now functional."
+           output.innerHTML = "Your spacewalk is successful, the communications dish is now functional."
            comsDishFixed = true
          }
          else{
@@ -856,15 +869,16 @@
  }
 
 function death(){
-  output.innerHTML = "you die"
+  output.innerHTML = "you die (reload page to restart)"
   console.log("you die")
+  amDead = true;
+  
 }
 
 function win(){
-  output.innerHTML = "YOU WIN"
+  output.innerHTML = "YOU WIN, an earling ship picks you up and takes you back to earth... just in time for Christmas."
   console.log("YOU WIN")
 }
-
 
 
 
@@ -882,5 +896,6 @@ e2 = new E2()
 reactor = new Reactor()
 airlock  = new Airlock()
 
-activeRoom = c2
-output.innerHTML = "You hear a shrill bepping as you drag yourself out of your hypersleep chamber, it is odly quiet today....."         
+activeRoom = quarters
+       
+
